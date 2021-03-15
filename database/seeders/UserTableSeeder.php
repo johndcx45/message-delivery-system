@@ -11,10 +11,10 @@ class UserTableSeeder extends Seeder
     public function run()
     {
         User::create([
-            'name' => 'John',
-            'username' => 'bl4d3runn3r',
-            'password' => Hash::make('cyberpunk'),
-            'role' => 'admin'
+            'name' => 'Vincent',
+            'username' => 'def4lt',
+            'password' => Hash::make('deadsec'),
+            'role' => 'regular'
         ]);
     }
 }

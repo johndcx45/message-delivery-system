@@ -25,3 +25,11 @@ Route::get('/login', function () {
 Route::get('/homepage', function () {
     return view('homepage');
 })->middleware('auth:api');
+
+Route::get('/backoffice', function () {
+    return view('homepage');
+})->middleware('auth:api');
+
+Route::get('/regular', function () {
+    return view('homepage');
+})->middleware('auth:api');
