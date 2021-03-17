@@ -13,7 +13,7 @@
                         placeholder="Username" v-model="username" required>
                     <label class="label-text">Password</label>
                     <input type="password" class="input-text" id="input-password" 
-                        placeholder="Password" v-model="password" required>
+                        placeholder="Password" v-model="password" required >
                     <button type="submit" class="btn-login">Login</button>
                 </form>
             </div>
@@ -35,7 +35,21 @@ export default {
         return {
             username: null,
             password: null,
-            has_error: false
+            has_error: false,
+            bearerToken: function () {
+                let bearerToken = axios
+                    .request({
+                        url: '/api/bearertoken',
+                        method: 'get',
+                        baseURL: 'http://localhost:8000',
+                        headers: {
+                            'Authorisation': 'Bearer TOKEN'
+                        }
+                    })
+                    .then(response => {
+                    console.log(response.data)
+                });
+            }
         }
     },
     methods: {
@@ -47,8 +61,17 @@ export default {
             }).then(response => {
                 let role = response.data.user.role;
                 let status = response.status;
-                
-                if( status === 200 && ( role === 'admin' || role === 'backoffice' ) ){
+                let access_token = response.data.access_token;
+                let name = response.data.user.name;
+
+                localStorage.setItem('access_token', access_token);
+                localStorage.setItem('username', app.username);
+                localStorage.setItem('name', name);
+             
+
+                if( status === 200 && role === 'admin'){
+                    this.$router.push({ name: 'admin', query: { redirect: '/admin' }});
+                } else if( status === 200 && role === 'backoffice' ){
                     this.$router.push({ name: 'backoffice', query: { redirect: '/backoffice' }});
                 } else if ( status === 200 && (role === 'regular' )) {
                     console.log("Inside regular homepage");

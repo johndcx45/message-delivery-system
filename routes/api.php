@@ -26,3 +26,7 @@ Route::post('login', [LoginController::class, 'login']);
 Route::resource('user', UserController::class);
 
 Route::resource('message', MessageController::class)->middleware('auth:api');
+
+Route::get('authuser', [UserController::class, 'getAuthenticatedUser'])->middleware('auth:api');;
+
+Route::get('bearertoken', [UserController::class, 'getBearerToken']);

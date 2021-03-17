@@ -1,5 +1,8 @@
 <template>
-  <h1>Regular Homepage</h1>
+    <div class="main-container">
+      <img :src="'/img/time-machine.svg'" class="time-machine-icon">
+      <h1>Time Machine Application</h1>
+    </div>
 </template>
 
 <script>

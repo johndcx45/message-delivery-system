@@ -38,7 +38,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        
+        return response(['user' => new UserResource($user), 'status' => 'Retrieved successfully'], 200);        
     }
 
     /**
@@ -64,7 +64,11 @@ class UserController extends Controller
         //
     }
 
-    public function getAuthenticatedUser(){
-        return Auth::user();
+    public function getBearerToken (Request $request) {
+        return response(['bearerToken' => $request->bearerToken()]);
+    }
+
+    public function getAuthenticatedUser (Request $request){
+        return $request->user()->name;
     }
 }
