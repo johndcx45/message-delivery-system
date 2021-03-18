@@ -35,21 +35,7 @@ export default {
         return {
             username: null,
             password: null,
-            has_error: false,
-            bearerToken: function () {
-                let bearerToken = axios
-                    .request({
-                        url: '/api/bearertoken',
-                        method: 'get',
-                        baseURL: 'http://localhost:8000',
-                        headers: {
-                            'Authorisation': 'Bearer TOKEN'
-                        }
-                    })
-                    .then(response => {
-                    console.log(response.data)
-                });
-            }
+            has_error: false
         }
     },
     methods: {

@@ -4,6 +4,8 @@ import LoginPageComponent from './components/LoginPageComponent';
 import BackofficePageComponent from './components/BackofficePageComponent';
 import RegularPageComponent from './components/RegularPageComponent';
 import AdminPageComponent from './components/AdminPageComponent';
+import ShowMessagesComponent from './/components/ShowMessagesComponent';
+
 Vue.use(VueRouter);
 
 export const routes = [
@@ -38,5 +40,15 @@ export const routes = [
     meta: {
       auth: true
     }
+  },
+  {
+    path: '/view',
+    name: 'View',
+    component: ShowMessagesComponent
+  },
+  {
+    path: '/home',
+    name: 'Home',
+    component: AdminPageComponent
   }
 ]
