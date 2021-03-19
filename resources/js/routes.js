@@ -9,6 +9,7 @@ import ShowMessagesComponent from './/components/ShowMessagesComponent';
 import CreateAnnouncementComponent from './components/CreateAnnouncementComponent';
 import EditAnnouncementComponent from './components/EditAnnouncementComponent';
 import UsersPageComponent from './components/UsersPageComponent';
+import FullViewComponent from './components/FullViewComponent';
 
 Vue.use(VueRouter);
 
@@ -69,5 +70,10 @@ export const routes = [
     path: '/register',
     name: 'Register',
     component: UsersPageComponent
+  },
+  {
+    path: '/fullview',
+    name: 'FullView',
+    component: FullViewComponent
   }
 ]

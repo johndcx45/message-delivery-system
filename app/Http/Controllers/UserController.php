@@ -36,7 +36,7 @@ class UserController extends Controller
             'name' => $name,
             'username' => $username,
             'role' => $role,
-            'password' => password
+            'password' => $password
         ]);
 
         return response(['user' => new UserResource($newUser), 'status' => 'Created'], 200);

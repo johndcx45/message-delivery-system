@@ -18,10 +18,10 @@
                 <tbody>
                     <tr v-for="message in messages" :key="message.id">
                         <td>{{ message.id }}</td>
-                        <td>{{ message.start_date}}</td>
+                        <td>{{ message.start_date }}</td>
                         <td>{{ message.expiration_date }}</td>
                         <td>{{ message.subject }}</td>                        
-                        <td><button class="btn btn-view">View</button></td>
+                        <td><button class="btn btn-view"><router-link to="/fullview">View</router-link></button></td>
                         <td><button class="btn btn-edit">Edit</button></td> 
                         <td><button class="btn btn-delete">Delete</button></td> 
                     </tr>
