@@ -12,7 +12,7 @@
                         <li><router-link to="/view">Announcements</router-link></li>
                         <li><router-link to="/create">Create Announcement</router-link></li>
                         <li><router-link to="/edit">Edit Announcement</router-link></li>
-                        <li><router-link to="register"> User</router-link></li>
+                        <li><router-link to="/register">Register User</router-link></li>
                     </ul>
                 </nav>
             </div>
@@ -68,5 +68,10 @@ export default {
     .ul-admin li:hover {
         transition: 0.2s;
         border-bottom: 2px solid #2196F3;
+    }
+
+    nav ul li {
+        text-decoration: none;
+        color: #000;
     }
 </style>

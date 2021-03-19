@@ -27,7 +27,19 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $name = $request->input('name');
+        $username = $request->input('username');
+        $role = $request->input('role');
+        $password = bcrypt($request->input('password'));
+
+        $newUser = User::create([
+            'name' => $name,
+            'username' => $username,
+            'role' => $role,
+            'password' => password
+        ]);
+
+        return response(['user' => new UserResource($newUser), 'status' => 'Created'], 200);
     }
 
     /**

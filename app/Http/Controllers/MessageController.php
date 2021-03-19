@@ -72,7 +72,7 @@ class MessageController extends Controller
     public function update(Request $request, Message $message)
     {
         $data = [
-            'created_by' => $request->user()->id,
+            'created_by' => $request->input('name'),
             'subject' => $request->input('subject'),
             'content' => $request->input('content'),
             'start_date' => $request->input('start_date'),

@@ -17,6 +17,7 @@
                 </thead>
                 <tbody>
                     <tr v-for="message in messages" :key="message.id">
+                        <td>{{ message.id }}</td>
                         <td>{{ message.start_date}}</td>
                         <td>{{ message.expiration_date }}</td>
                         <td>{{ message.subject }}</td>                        
@@ -79,7 +80,6 @@ export default {
         bottom: 0;
         width: 100%;
         background-color: #e8e8e8;
-        border-top: 2px solid #000;
     }
 
     table {
