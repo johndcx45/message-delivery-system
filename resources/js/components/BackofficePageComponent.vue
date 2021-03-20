@@ -1,26 +1,18 @@
 <template>
     <div class="main-container">
-        <img :src="'/img/time-machine.svg'" class="time-machine-icon">
-        <h1>Time Machine Application</h1>
-        <div class="nav-bar">
-            <nav>
-                <ul>
-                    <li>Home</li>
-                    <li>Announcements</li>
-                    <li>Create Announcement</li>
-                    <li>Edit Announcement</li>
-                </ul>
-            </nav>
-        </div>
-        <div class="content">
-
-        </div>
+        <BackofficeNavBar />
+        <UsernameViewComponent />
     </div>
 </template>
 
 <script>
+import BackofficeNavBar from './BackofficeNavBar.vue'
+import UsernameViewComponent from './UsernameViewComponent.vue'
 export default {
-
+    components: {
+        'BackofficeNavBar': BackofficeNavBar,
+        'UsernameViewComponent': UsernameViewComponent
+    }
 }
 </script>
 

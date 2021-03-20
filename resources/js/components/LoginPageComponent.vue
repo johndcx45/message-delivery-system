@@ -49,11 +49,16 @@ export default {
                 let status = response.status;
                 let access_token = response.data.access_token;
                 let name = response.data.user.name;
+                let user_id = response.data.user.id;
+
+                console.log(user_id);
+                console.log(response);
 
                 localStorage.setItem('access_token', access_token);
                 localStorage.setItem('username', app.username);
                 localStorage.setItem('name', name);
-             
+                localStorage.setItem('role', role);
+                localStorage.setItem('user_id', user_id);
 
                 if( status === 200 && role === 'admin'){
                     this.$router.push({ name: 'admin', query: { redirect: '/admin' }});

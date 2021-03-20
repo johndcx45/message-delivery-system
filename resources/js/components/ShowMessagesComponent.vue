@@ -1,6 +1,8 @@
 <template>
     <div class="component-view">
-        <AdminNavBar />
+        <AdminNavBar v-if="this.role == 'admin'"/>
+        <BackofficeNavBar v-else-if="this.role == 'backoffice'"/>
+        <RegularNavBar v-else />
         <h3>Announcements</h3>
         <div class="content-view">
             <table>
@@ -21,8 +23,7 @@
                         <td>{{ message.start_date }}</td>
                         <td>{{ message.expiration_date }}</td>
                         <td>{{ message.subject }}</td>                        
-                        <td><button class="btn btn-view"><router-link to="/fullview">View</router-link></button></td>
-                        <td><button class="btn btn-edit">Edit</button></td> 
+                        <td><button class="btn btn-view" v-on:click="viewMessage(message.id)"><router-link to="/fullview">View</router-link></button></td>
                         <td><button class="btn btn-delete">Delete</button></td> 
                     </tr>
                 </tbody>
@@ -34,12 +35,17 @@
 <script>
 import axios from 'axios';
 import AdminNavBar from './AdminNavBar.vue';
+import BackofficeNavBar from './BackofficeNavBar.vue';
 
 export default {
-    components: { 'AdminNavBar': AdminNavBar },
+    components: { 
+        'AdminNavBar': AdminNavBar,
+        'BackofficeNavBar': BackofficeNavBar
+    },
     data () {
         return {
             messages: [],
+            role: localStorage.getItem('role')
         }        
     },
     created () {
@@ -55,6 +61,12 @@ export default {
             this.messages = response.data.messages;
             console.log(response);
         });
+    },
+    methods: {
+        viewMessage (id) {
+            localStorage.setItem('message_view_id', id);
+            console.log(localStorage.getItem('message_view_id'));
+        }
     }
 }
 </script>

@@ -8,7 +8,7 @@
             <div class="nav-bar-admin">
                 <nav class="nav-admin">
                     <ul class="ul-admin">
-                        <li><router-link to="/home">Home</router-link></li>
+                        <li><router-link to="/admin">Home</router-link></li>
                         <li><router-link to="/view">Announcements</router-link></li>
                         <li><router-link to="/create">Create Announcement</router-link></li>
                         <li><router-link to="/edit">Edit Announcement</router-link></li>

@@ -27,6 +27,7 @@ Route::resource('user', UserController::class)->middleware('auth:api');
 
 Route::resource('message', MessageController::class)->middleware('auth:api');
 
+Route::get('/message/user/{id}', [MessageController::class, 'getUserSpecificMessages']);
 
 /* 
 Route::get('authuser', [UserController::class, 'getAuthenticatedUser'])->middleware('auth:api');;

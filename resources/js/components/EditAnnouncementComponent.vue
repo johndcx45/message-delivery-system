@@ -1,6 +1,7 @@
 <template>
   <div class="component-view">
-        <AdminNavBar />
+        <AdminNavBar v-if="this.role == 'admin'"/>
+        <BackofficeNavBar v-else-if="this.role == 'backoffice'"/>
         <h3>Edit Announcement</h3>
         <div class="content-view-create">
             <div class="input-container">
@@ -24,10 +25,11 @@
 
 <script>
 import AdminNavBar from './AdminNavBar';
-
+import BackofficeNavBar from './BackofficeNavBar';
 export default {
     components: {
-        'AdminNavBar': AdminNavBar
+        'AdminNavBar': AdminNavBar,
+        'BackofficeNavBar': BackofficeNavBar
     },
     data () {
         return {
@@ -35,7 +37,8 @@ export default {
             subject: null,
             content: null,
             startDate: null,
-            expirationDate: null
+            expirationDate: null,
+            role: localStorage.getItem('role')
         }
     },
     methods: {

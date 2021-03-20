@@ -1,18 +1,18 @@
 <template>
     <div class="main-container">
         <AdminNavBar />
-        <Homepage />
+        <UsernameViewComponent />
     </div>
 </template>
 
 <script>
 import AdminNavBar from './AdminNavBar';
-import HomepageComponent from './HomepageComponent';
+import UsernameViewComponent from './UsernameViewComponent.vue';
 
 export default {
     components: {
         'AdminNavBar': AdminNavBar,
-        'Homepage': HomepageComponent
+        'UsernameViewComponent': UsernameViewComponent
     }
 }
 </script>

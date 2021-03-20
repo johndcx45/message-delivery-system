@@ -1,13 +1,16 @@
 <template>
     <div class="main-container">
-      <img :src="'/img/time-machine.svg'" class="time-machine-icon">
-      <h1>Time Machine Application</h1>
+      <RegularNavBar />
     </div>
 </template>
 
 <script>
-export default {
+import RegularNavBar from './RegularNavBar.vue'
 
+export default {
+  components: {
+    'RegularNavBar': RegularNavBar
+  }
 }
 </script>
 

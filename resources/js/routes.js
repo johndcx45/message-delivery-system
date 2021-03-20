@@ -10,6 +10,7 @@ import CreateAnnouncementComponent from './components/CreateAnnouncementComponen
 import EditAnnouncementComponent from './components/EditAnnouncementComponent';
 import UsersPageComponent from './components/UsersPageComponent';
 import FullViewComponent from './components/FullViewComponent';
+import BackofficeInboxComponent from './components/BackofficeInboxComponent';
 
 Vue.use(VueRouter);
 
@@ -75,5 +76,10 @@ export const routes = [
     path: '/fullview',
     name: 'FullView',
     component: FullViewComponent
+  },
+  {
+    path: '/inbox',
+    name: 'BackofficeInbox',
+    component: BackofficeInboxComponent
   }
 ]

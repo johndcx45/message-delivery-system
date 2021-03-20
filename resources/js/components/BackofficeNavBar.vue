@@ -5,13 +5,14 @@
                 <img :src="'/img/time-machine.svg'" class="time-machine-icon">
                 <h1 class="admin-header">Time Machine Application</h1>
             </div>
-            <div class="nav-bar-admin">
-                <nav class="nav-admin">
-                    <ul class="ul-admin">
-                        <li>Home</li>
-                        <li>Announcements</li>
-                        <li>Create Announcement</li>
-                        <li>Edit Announcement</li>
+            <div class="nav-bar-backoffice">
+                <nav class="nav-backoffice">
+                    <ul class="ul-backoffice">
+                        <li><router-link to="/backoffice">Home</router-link></li>
+                        <li><router-link to="/view">Announcements</router-link></li>
+                        <li><router-link to="/create">Create Announcement</router-link></li>
+                        <li><router-link to="/edit">Edit Announcement</router-link></li>
+                        <li><router-link to="/inbox">My Announcements</router-link></li>
                     </ul>
                 </nav>
             </div>

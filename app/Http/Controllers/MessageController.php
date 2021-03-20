@@ -6,6 +6,7 @@ use App\Models\Message;
 use Illuminate\Http\Request;
 use App\Http\Resources\MessageResource;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class MessageController extends Controller
 {
@@ -99,4 +100,10 @@ class MessageController extends Controller
         
         return response(['status' => 'Deleted successfully'], 200);
     }
+
+    public function getUserSpecificMessages($id) {
+        $messages = DB::table('messages')->where('user_id', '=', $id)->get();
+        
+        return response(['messages' => new MessageResource($messages)], 200);
+    }  
 }
