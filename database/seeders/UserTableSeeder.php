@@ -30,12 +30,19 @@ class UserTableSeeder extends Seeder
             'password' => Hash::make('2077'),
             'role' => 'backoffice'
         ]);
-        */
+        
         User::create([
             'name' => 'Khada Jhin',
             'username' => 'fashionist',
             'password' => Hash::make('1234'),
             'role' => 'backoffice'
+        ]);
+        */
+        User::create([
+            'name' => 'Victoria',
+            'username' => 'amber',
+            'password' => Hash::make('style'),
+            'role' => 'regular'
         ]);
     }
 }

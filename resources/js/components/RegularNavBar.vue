@@ -9,7 +9,7 @@
                 <nav class="nav-regular">
                     <ul class="ul-regular">
                         <li><router-link to="/regular">Home</router-link></li>
-                        <li><router-link to="/inbox">Inbox</router-link></li>
+                        <li><router-link to="/reginbox">Inbox</router-link></li>
                     </ul>
                 </nav>
             </div>

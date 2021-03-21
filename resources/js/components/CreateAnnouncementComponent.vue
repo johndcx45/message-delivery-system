@@ -2,6 +2,7 @@
     <div class="component-view">
         <AdminNavBar v-if="this.role == 'admin'"/>
         <BackofficeNavBar v-else-if="this.role == 'backoffice'"/>
+        <RegularNavBar v-else/>
         <h3>Create Announcement</h3>
         <div class="content-view-create">
             <div class="input-container">
@@ -26,13 +27,15 @@ import AdminNavBar from './AdminNavBar';
 import VueSimpleAlert from 'vue-simple-alert';
 import Vue from 'vue';
 import BackofficeNavBar from './BackofficeNavBar';
+import RegularNavBar from './RegularNavBar.vue';
 
 Vue.use(VueSimpleAlert);
 
 export default {
     components: {
         'AdminNavBar': AdminNavBar,
-        'BackofficeNavBar': BackofficeNavBar
+        'BackofficeNavBar': BackofficeNavBar,
+        'RegularNavBar': RegularNavBar
     },
     data () {
         return {

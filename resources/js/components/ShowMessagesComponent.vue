@@ -2,7 +2,6 @@
     <div class="component-view">
         <AdminNavBar v-if="this.role == 'admin'"/>
         <BackofficeNavBar v-else-if="this.role == 'backoffice'"/>
-        <RegularNavBar v-else />
         <h3>Announcements</h3>
         <div class="content-view">
             <table>

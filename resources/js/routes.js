@@ -11,6 +11,8 @@ import EditAnnouncementComponent from './components/EditAnnouncementComponent';
 import UsersPageComponent from './components/UsersPageComponent';
 import FullViewComponent from './components/FullViewComponent';
 import BackofficeInboxComponent from './components/BackofficeInboxComponent';
+import RegularInboxComponent from './components/RegularInboxComponent';
+import FullViewRegularComponent from './components/FullViewRegComponent';
 
 Vue.use(VueRouter);
 
@@ -81,5 +83,16 @@ export const routes = [
     path: '/inbox',
     name: 'BackofficeInbox',
     component: BackofficeInboxComponent
+  },
+  {
+    path: '/reginbox',
+    name: 'RegularInbox',
+    component: RegularInboxComponent
+  },
+  {
+    path: '/fullviewreg',
+    name: 'FullViewRegular',
+    component: FullViewRegularComponent
   }
+  
 ]
