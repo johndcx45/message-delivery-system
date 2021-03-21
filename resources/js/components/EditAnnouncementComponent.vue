@@ -81,6 +81,8 @@ export default {
                     this.$alert('The message has been updated!');
                 }
             });
+
+            
         }
     }
 }

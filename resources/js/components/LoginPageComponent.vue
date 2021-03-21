@@ -51,9 +51,6 @@ export default {
                 let name = response.data.user.name;
                 let user_id = response.data.user.id;
 
-                console.log(user_id);
-                console.log(response);
-
                 localStorage.setItem('access_token', access_token);
                 localStorage.setItem('username', app.username);
                 localStorage.setItem('name', name);
@@ -65,7 +62,6 @@ export default {
                 } else if( status === 200 && role === 'backoffice' ){
                     this.$router.push({ name: 'backoffice', query: { redirect: '/backoffice' }});
                 } else if ( status === 200 && (role === 'regular' )) {
-                    console.log("Inside regular homepage");
                     this.$router.push({ name: 'regular', query: { redirect: '/regular' }});
                 } 
             });

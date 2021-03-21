@@ -2333,8 +2333,61 @@ __webpack_require__.r(__webpack_exports__);
       }
     }).then(function (response) {
       _this.message = response.data.message;
-      console.log(response);
     });
+    this.markAsRead();
+  },
+  methods: {
+    markAsRead: function markAsRead() {
+      var _this2 = this;
+
+      var message_view_id = localStorage.getItem('message_view_id');
+      var url = "http://localhost:8000/api/message/".concat(message_view_id);
+      var access_token = localStorage.getItem('access_token');
+      var fetchedData = this.axios.get(url, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-type": "Application/json",
+          "Authorization": "Bearer ".concat(access_token)
+        }
+      }).then(function (response) {
+        var id = localStorage.getItem('message_view_id');
+        var name = localStorage.getItem('name');
+        var message = response.data.message;
+
+        if (!message.viewed_by.includes(name) || message.viewed_by == '') {
+          var _url = "http://localhost:8000/api/read";
+
+          var _access_token = localStorage.getItem('access_token');
+
+          var config = {
+            headers: {
+              Authorization: "Bearer ".concat(_access_token)
+            }
+          };
+
+          var _response = axios.post(_url, {
+            id: id,
+            name: name
+          }, config);
+        }
+      }).then(function () {
+        return _this2.getMessage();
+      });
+    },
+    getMessage: function getMessage() {
+      var message_view_id = localStorage.getItem('message_view_id');
+      var url = "http://localhost:8000/api/message/".concat(message_view_id);
+      var access_token = localStorage.getItem('access_token');
+      var fetchedData = this.axios.get(url, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-type": "Application/json",
+          "Authorization": "Bearer ".concat(access_token)
+        }
+      }).then(function (response) {
+        console.log(response.data.message);
+      });
+    }
   }
 });
 
@@ -2403,8 +2456,6 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
         var access_token = response.data.access_token;
         var name = response.data.user.name;
         var user_id = response.data.user.id;
-        console.log(user_id);
-        console.log(response);
         localStorage.setItem('access_token', access_token);
         localStorage.setItem('username', app.username);
         localStorage.setItem('name', name);
@@ -2426,8 +2477,6 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
             }
           });
         } else if (status === 200 && role === 'regular') {
-          console.log("Inside regular homepage");
-
           _this.$router.push({
             name: 'regular',
             query: {
@@ -2453,6 +2502,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2505,6 +2567,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _AdminNavBar_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AdminNavBar.vue */ "./resources/js/components/AdminNavBar.vue");
 /* harmony import */ var _BackofficeNavBar_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./BackofficeNavBar.vue */ "./resources/js/components/BackofficeNavBar.vue");
+/* harmony import */ var vue_simple_alert__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-simple-alert */ "./node_modules/vue-simple-alert/lib/index.js");
 //
 //
 //
@@ -2539,6 +2602,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
@@ -2550,29 +2614,71 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       messages: [],
+      message: null,
       role: localStorage.getItem('role')
     };
   },
+  computed: {
+    availableMessages: function availableMessages() {
+      return this.messages.filter(function (message) {
+        return message.deletedAt == null;
+      });
+    }
+  },
   created: function created() {
-    var _this = this;
-
-    var url = 'http://localhost:8000/api/message';
-    var access_token = localStorage.getItem('access_token');
-    var fetchedData = this.axios.get(url, {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Content-type": "Application/json",
-        "Authorization": "Bearer ".concat(access_token)
-      }
-    }).then(function (response) {
-      _this.messages = response.data.messages;
-      console.log(response);
-    });
+    this.getMessages();
   },
   methods: {
     viewMessage: function viewMessage(id) {
       localStorage.setItem('message_view_id', id);
-      console.log(localStorage.getItem('message_view_id'));
+      var name = localStorage.getItem('name');
+    },
+    deleteMessage: function deleteMessage(message_id, user_id) {
+      var _this = this;
+
+      var loggedUserId = localStorage.getItem('user_id');
+      var err;
+
+      if (loggedUserId == user_id) {
+        var url = "http://localhost:8000/api/message/".concat(message_id);
+        var access_token = localStorage.getItem('access_token');
+        var fetchedData = this.axios["delete"](url, {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Content-type": "Application/json",
+            "Authorization": "Bearer ".concat(access_token)
+          }
+        })["catch"](function (err) {
+          if (err) {
+            err = null;
+
+            _this.$alert('An unexpected error ocurred!');
+          }
+        })["finally"](function () {
+          if (!err) {
+            _this.$alert('The message has been deleted');
+
+            _this.getMessages();
+          }
+        });
+      } else {
+        this.$alert('You do not have enough permissions to delete this message!');
+      }
+    },
+    getMessages: function getMessages() {
+      var _this2 = this;
+
+      var url = 'http://localhost:8000/api/message';
+      var access_token = localStorage.getItem('access_token');
+      var fetchedData = this.axios.get(url, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-type": "Application/json",
+          "Authorization": "Bearer ".concat(access_token)
+        }
+      }).then(function (response) {
+        _this2.messages = response.data.messages;
+      });
     }
   }
 });
@@ -44054,7 +44160,7 @@ var render = function() {
             _c("tr", [
               _c("td", [_vm._v(_vm._s(_vm.message.id))]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(_vm.message.created - _vm.by))]),
+              _c("td", [_vm._v(_vm._s(_vm.message.created_by))]),
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(_vm.message.subject))]),
               _vm._v(" "),
@@ -44248,7 +44354,46 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div")
+  return _c("div", { staticClass: "nav-bar-component" }, [
+    _c("div", { staticClass: "header" }, [
+      _c("div", { staticClass: "h1-img-header" }, [
+        _c("img", {
+          staticClass: "time-machine-icon",
+          attrs: { src: "/img/time-machine.svg" }
+        }),
+        _vm._v(" "),
+        _c("h1", { staticClass: "admin-header" }, [
+          _vm._v("Time Machine Application")
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "nav-bar-regular" }, [
+        _c("nav", { staticClass: "nav-regular" }, [
+          _c("ul", { staticClass: "ul-regular" }, [
+            _c(
+              "li",
+              [
+                _c("router-link", { attrs: { to: "/regular" } }, [
+                  _vm._v("Home")
+                ])
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "li",
+              [
+                _c("router-link", { attrs: { to: "/inbox" } }, [
+                  _vm._v("Inbox")
+                ])
+              ],
+              1
+            )
+          ])
+        ])
+      ])
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -44316,7 +44461,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "tbody",
-            _vm._l(_vm.messages, function(message) {
+            _vm._l(_vm.availableMessages, function(message) {
               return _c("tr", { key: message.id }, [
                 _c("td", [_vm._v(_vm._s(message.id))]),
                 _vm._v(" "),
@@ -44346,7 +44491,20 @@ var render = function() {
                   )
                 ]),
                 _vm._v(" "),
-                _vm._m(1, true)
+                _c("td", [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-delete",
+                      on: {
+                        click: function($event) {
+                          return _vm.deleteMessage(message.id, message.user_id)
+                        }
+                      }
+                    },
+                    [_vm._v("Delete")]
+                  )
+                ])
               ])
             }),
             0
@@ -44378,14 +44536,6 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { staticClass: "ghost-th" })
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("button", { staticClass: "btn btn-delete" }, [_vm._v("Delete")])
     ])
   }
 ]

@@ -94,16 +94,26 @@ class MessageController extends Controller
      * @param  \App\Models\Message  $message
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Message $message)
+    //public function destroy(Message $message)
+    public function destroy($id)
     {
-        $message->delete();
-        
-        return response(['status' => 'Deleted successfully'], 200);
+        Message::find($id)->delete();
+
+        return response(['status' => "Deleted Successfully!"], 200);
     }
 
-    public function getUserSpecificMessages($id) {
-        $messages = DB::table('messages')->where('user_id', '=', $id)->get();
+    public function getMessageById($id) {
+        $message = DB::table('messages')->where('id', '=', $id)->get();
         
-        return response(['messages' => new MessageResource($messages)], 200);
-    }  
+        return response(['message' => $message]);    
+    }
+    
+    public function userRead(Request $request) {
+        $id = $request->input('id');
+        $message = Message::find($id);
+        $content = $message->viewed_by . $request->input('name') . ',';
+
+        DB::update('UPDATE messages SET viewed_by =  ? WHERE id = ?', [$content, $id]);
+        return response(['status' => 'Updated Succesfully'], 200);
+    }
 }

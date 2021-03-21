@@ -18,13 +18,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="message in messages" :key="message.id">
+                    <tr v-for="message in availableMessages" :key="message.id">
                         <td>{{ message.id }}</td>
                         <td>{{ message.start_date }}</td>
                         <td>{{ message.expiration_date }}</td>
                         <td>{{ message.subject }}</td>                        
                         <td><button class="btn btn-view" v-on:click="viewMessage(message.id)"><router-link to="/fullview">View</router-link></button></td>
-                        <td><button class="btn btn-delete">Delete</button></td> 
+                        <td><button class="btn btn-delete" v-on:click="deleteMessage(message.id, message.user_id)">Delete</button></td> 
                     </tr>
                 </tbody>
             </table>
@@ -36,6 +36,7 @@
 import axios from 'axios';
 import AdminNavBar from './AdminNavBar.vue';
 import BackofficeNavBar from './BackofficeNavBar.vue';
+import VueSimpleAlert from 'vue-simple-alert';
 
 export default {
     components: { 
@@ -45,27 +46,66 @@ export default {
     data () {
         return {
             messages: [],
+            message: null,
             role: localStorage.getItem('role')
         }        
     },
+    computed: {
+        availableMessages: function() {
+            return this.messages.filter(function (message) {
+                return message.deletedAt == null;
+            });
+        }
+    },
     created () {
-        let url = 'http://localhost:8000/api/message';
-        let access_token = localStorage.getItem('access_token');
-
-        const fetchedData = this.axios.get( url, { headers: {
-            "Access-Control-Allow-Origin" : "*",
-            "Content-type": "Application/json",
-            "Authorization": `Bearer ${access_token}`
-            }
-        }).then(response => {
-            this.messages = response.data.messages;
-            console.log(response);
-        });
+        this.getMessages();
     },
     methods: {
         viewMessage (id) {
             localStorage.setItem('message_view_id', id);
-            console.log(localStorage.getItem('message_view_id'));
+            let name = localStorage.getItem('name');
+        },
+        deleteMessage(message_id, user_id) {
+            let loggedUserId = localStorage.getItem('user_id');
+            let err;
+            
+            if(loggedUserId == user_id) {
+                let url = `http://localhost:8000/api/message/${message_id}`;
+                let access_token = localStorage.getItem('access_token');
+
+                const fetchedData = this.axios.delete( url, { headers: {
+                    "Access-Control-Allow-Origin" : "*",
+                    "Content-type": "Application/json",
+                    "Authorization": `Bearer ${access_token}`
+                    }
+                }).catch(err => {
+                    if(err){
+                        err = null;
+                        this.$alert('An unexpected error ocurred!');
+                    }
+                }).finally(() => {
+                    if ( !err ) {
+                        this.$alert('The message has been deleted');
+                        this.getMessages()
+                    }                    
+                });
+
+            } else {
+                this.$alert('You do not have enough permissions to delete this message!');
+            }
+        },
+        getMessages(){ 
+            let url = 'http://localhost:8000/api/message';
+            let access_token = localStorage.getItem('access_token');
+
+            const fetchedData = this.axios.get( url, { headers: {
+                "Access-Control-Allow-Origin" : "*",
+                "Content-type": "Application/json",
+                "Authorization": `Bearer ${access_token}`
+                }
+            }).then(response => {
+                this.messages = response.data.messages;
+            });
         }
     }
 }
