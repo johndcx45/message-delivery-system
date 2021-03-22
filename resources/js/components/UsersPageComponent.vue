@@ -133,7 +133,7 @@ export default {
         box-shadow: 3px 3px 5px 6px #eee;
         background-color: #fff;
         border-radius: 15px;
-        width: 400px;
+        width: 100%;
         height: 350px;
     }
 

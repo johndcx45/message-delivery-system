@@ -110,7 +110,7 @@ export default {
                     "Authorization": `Bearer ${access_token}`
                 }
             }).then(response => { 
-                console.log(response.data.message);
+                //console.log(response.data.message);
             });
         }
     }
