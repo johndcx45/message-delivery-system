@@ -16,7 +16,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
     .main-content {
         margin-top: 15px;
         display: flex;
@@ -27,8 +27,6 @@ export default {
         top: 111px;
         bottom: 0;
         width: 100%;
-        background-color: #e8e8e8;
-        border-top: 2px solid #000;
         border-radius: 5px;
     }
 </style>

@@ -17,11 +17,10 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
     .main-container {
         display: flex;
         flex-flow: column;
         height: 100%;
-        background-color: #f4f4f2;
     }
 </style>

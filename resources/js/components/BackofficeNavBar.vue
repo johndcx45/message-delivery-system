@@ -8,11 +8,11 @@
             <div class="nav-bar-backoffice">
                 <nav class="nav-backoffice">
                     <ul class="ul-backoffice">
-                        <li><router-link to="/backoffice">Home</router-link></li>
-                        <li><router-link to="/view">Announcements</router-link></li>
-                        <li><router-link to="/create">Create Announcement</router-link></li>
-                        <li><router-link to="/edit">Edit Announcement</router-link></li>
-                        <li><router-link to="/inbox">My Announcements</router-link></li>
+                        <li><router-link to="/backoffice" style="text-decoration: none; color: #000;">Home</router-link></li>
+                        <li><router-link to="/view" style="text-decoration: none; color: #000;">Announcements</router-link></li>
+                        <li><router-link to="/create" style="text-decoration: none; color: #000;">Create Announcement</router-link></li>
+                        <li><router-link to="/edit" style="text-decoration: none; color: #000;">Edit Announcement</router-link></li>
+                        <li><router-link to="/inbox" style="text-decoration: none; color: #000;">My Announcements</router-link></li>
                     </ul>
                 </nav>
             </div>
@@ -26,7 +26,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
  .h1-img-header {
         display: flex;
         flex-direction: row;
@@ -46,17 +46,40 @@ export default {
         margin: auto 0;
     } 
 
-    .nav-bar-admin {
+    .nav-bar-component {
+        background-color: #fff;
+    }
+
+    .h1-img-header {
+        display: flex;
+        flex-direction: row;
+        align-content: center;
+        justify-content: center;
+    }
+  
+     .time-machine-icon {
+        width: 75px;
+        height: 75px;
+        display: block;
+    }  
+
+    .admin-header {
+        text-align: center;
+        display: block;
+        margin: auto 0;
+    } 
+
+    .nav-bar-backoffice {
         width: 100%;
         text-align: center;
         margin-top: 10px;
     }
 
-    .ul-admin {
+    .ul-backoffice {
         list-style: none;
     }
 
-    .ul-admin li {
+    .ul-backoffice li {
         display: inline-block;
         font-weight: 300;
         margin: 0 8px;
@@ -65,8 +88,13 @@ export default {
         padding: 3px;
     }
 
-    .ul-admin li:hover {
+    .ul-backoffice li:hover {
         transition: 0.2s;
-        border-bottom: 2px solid #2196F3;
+        border-bottom: 2px solid #e40017;
+    }
+
+    nav ul li {
+        text-decoration: none;
+        color: #000;
     }
 </style>

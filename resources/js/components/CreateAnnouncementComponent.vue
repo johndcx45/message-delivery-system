@@ -6,6 +6,8 @@
         <h3>Create Announcement</h3>
         <div class="content-view-create">
             <div class="input-container">
+                <div class="ghost">
+                </div>
                 <form class="create-form" method="POST" @submit.prevent="createMessage">
                     <label for="subject">Subject</label>
                         <input type="text" class="input-text-create" id="input-subject" name="subject" v-model="subject" placeholder="Subject" required>
@@ -87,7 +89,38 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+
+    .content-view-create {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+
+    h3 {
+        display: block;    
+        text-align: center;
+        margin-top: 45px;
+    }
+
+    .input-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 3px 3px 5px 6px #eee;
+        background-color: #fff;
+        border-radius: 15px;
+        width: 450px;
+        height: 400px;
+        margin-top: 100px;
+    }
+
+    .ghost {
+        display: block;
+        height: 40px;
+    }
 
     label {
         text-align: left;
@@ -96,10 +129,21 @@ export default {
     .input-text-create {
         display: block;
         margin: 8px 0px;
-        padding: 3px;
         border: 0 solid transparent;    
-        border-bottom: 2px solid #009879;
-        border-radius: 2px;
+        border-bottom: 2px solid #f05454;
+        padding: 5px;
+        margin: 7px 10px;
+    }
+
+    .btn-create {
+        border: 0px solid transparent;
+        outline: none;
+        background-color: #f05454;
+        width: 100px;
+        height: 35px;
+        color: white;
+        float: right;
+        border-radius: 3px;
     }
 
 </style>

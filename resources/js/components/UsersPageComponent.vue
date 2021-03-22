@@ -25,13 +25,13 @@
         <div class="user-form">
            <form class="create-form" method="POST" @submit.prevent="registerUser">
                 <label for="name">Name</label>
-                    <input type="text" name="name" v-model="name" placeholder="Name" required>
+                    <input type="text" class="input-text-create" name="name" v-model="name" placeholder="Name" required>
                 <label for="username">Username</label>
-                    <input type="text" name="username" v-model="username" placeholder="Username" required>
+                    <input type="text" class="input-text-create" name="username" v-model="username" placeholder="Username" required>
                 <label for="role">Role</label>
-                    <input type="text" name="role" v-model="role" placeholder="Role" required>
+                    <input type="text" class="input-text-create" name="role" v-model="role" placeholder="Role" required>
                 <label for="password">Password</label>
-                    <input type="password" name="password" v-model="password" placeholder="Password" required>
+                    <input type="password" name="password" class="input-text-create" v-model="password" placeholder="Password" required>
                 <button class="btn-create">Create</button>
             </form>
         </div>
@@ -110,7 +110,52 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+
+    .user-list {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+    }
+
+    h3 {
+        display: block;    
+        text-align: center;
+        margin-top: 45px;
+    }
+
+    .user-form {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 3px 3px 5px 6px #eee;
+        background-color: #fff;
+        border-radius: 15px;
+        width: 400px;
+        height: 350px;
+    }
+
+    .input-text-create {
+        display: block;
+        margin: 8px 0px;
+        border: 0 solid transparent;    
+        border-bottom: 2px solid #e4fbff;
+        padding: 5px;
+        margin: 7px 10px;
+    }
+
+    .btn-create {
+        border: 0px solid transparent;
+        outline: none;
+        background-color: #8ac4d0;
+        width: 100px;
+        height: 35px;
+        color: white;
+        float: right;
+        border-radius: 3px;
+    }
 
     table {
         border-collapse: collapse;
@@ -124,12 +169,12 @@ export default {
     }
 
     table thead tr, table thead tr {
-        background-color: #009879;
+        background-color: #8ac4d0;
         color: #fff;
     }
 
     .ghost-th {
-        background-color: #009879;
+        background-color: #e4fbff;
     }
 
     .actions-th {
@@ -149,12 +194,12 @@ export default {
     }
 
     table tbody tr:last-of-type {
-        border-bottom: 2px solid #009879;
+        border-bottom: 2px solid #8ac4d0;
     }
 
     table tbody tr.active-row {
         font-weight: bold;
-        color: #009879;
+        color: #8ac4d0;
         width: 100%;
     }
 
@@ -168,14 +213,6 @@ export default {
     }
 
     .btn-view {
-        background-color: #1fab89;
-    }
-
-    .btn-edit {
-        background-color: #ff9a3c;
-    }
-
-    .btn-delete {
-        background-color: #d72323;
+        background-color: #2196F3;
     }
 </style>

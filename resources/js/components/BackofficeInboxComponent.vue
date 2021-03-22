@@ -1,6 +1,7 @@
 <template>
     <div class="inbox-component">
         <BackofficeNavBar />
+        <h3>Backoffice Inbox</h3>
         <div class="messages-container">
             <table>
                 <thead>
@@ -57,6 +58,17 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+    h3 {
+        display: block;    
+        text-align: center;
+        margin-top: 45px;
+    }
 
+    .messages-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
 </style>

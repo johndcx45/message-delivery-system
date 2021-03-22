@@ -7,6 +7,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th>Id</th>
                         <th>Start Date</th>
                         <th>Expiration Date</th>
                         <th>Subject</th>
@@ -22,7 +23,7 @@
                         <td>{{ message.start_date }}</td>
                         <td>{{ message.expiration_date }}</td>
                         <td>{{ message.subject }}</td>                        
-                        <td><button class="btn btn-view" v-on:click="viewMessage(message.id)"><router-link to="/fullview">View</router-link></button></td>
+                        <td><button class="btn btn-view" v-on:click="viewMessage(message.id)"><router-link to="/fullview" style="text-decoration: none; color: white;">View</router-link></button></td>
                         <td><button class="btn btn-delete" v-on:click="deleteMessage(message.id, message.user_id)">Delete</button></td> 
                     </tr>
                 </tbody>
@@ -130,7 +131,6 @@ export default {
         top: 150px;
         bottom: 0;
         width: 100%;
-        background-color: #e8e8e8;
     }
 
     table {
@@ -145,12 +145,12 @@ export default {
     }
 
     table thead tr, table thead tr {
-        background-color: #009879;
+        background-color: #f05454;
         color: #fff;
     }
 
     .ghost-th {
-        background-color: #009879;
+        background-color: #f05454;
     }
 
     .actions-th {
@@ -170,12 +170,12 @@ export default {
     }
 
     table tbody tr:last-of-type {
-        border-bottom: 2px solid #009879;
+        border-bottom: 2px solid #f05454;
     }
 
     table tbody tr.active-row {
         font-weight: bold;
-        color: #009879;
+        color: #000;
         width: 100%;
     }
 
@@ -189,7 +189,7 @@ export default {
     }
 
     .btn-view {
-        background-color: #1fab89;
+        background-color: green;
     }
 
     .btn-edit {

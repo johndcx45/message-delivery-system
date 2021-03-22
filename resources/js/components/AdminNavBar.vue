@@ -8,11 +8,11 @@
             <div class="nav-bar-admin">
                 <nav class="nav-admin">
                     <ul class="ul-admin">
-                        <li><router-link to="/admin">Home</router-link></li>
-                        <li><router-link to="/view">Announcements</router-link></li>
-                        <li><router-link to="/create">Create Announcement</router-link></li>
-                        <li><router-link to="/edit">Edit Announcement</router-link></li>
-                        <li><router-link to="/register">Register User</router-link></li>
+                        <li><router-link to="/admin" style="text-decoration: none; color: #000;">Home</router-link></li>
+                        <li><router-link to="/view" style="text-decoration: none; color: #000;">Announcements</router-link></li>
+                        <li><router-link to="/create" style="text-decoration: none; color: #000;">Create Announcement</router-link></li>
+                        <li><router-link to="/edit" style="text-decoration: none; color: #000;">Edit Announcement</router-link></li>
+                        <li><router-link to="/register" style="text-decoration: none; color: #000;">Register User</router-link></li>
                     </ul>
                 </nav>
             </div>
@@ -27,6 +27,11 @@ export default {
 </script>
 
 <style>
+
+    .nav-bar-component {
+        background-color: #fff;
+    }
+
     .h1-img-header {
         display: flex;
         flex-direction: row;
@@ -67,7 +72,7 @@ export default {
 
     .ul-admin li:hover {
         transition: 0.2s;
-        border-bottom: 2px solid #2196F3;
+        border-bottom: 2px solid #e40017;
     }
 
     nav ul li {

@@ -29,6 +29,8 @@ Route::resource('message', MessageController::class)->middleware('auth:api');
 
 Route::get('/message/{id}', [MessageController::class, 'getMessageById']);
 
+Route::get('/message/user/{id}', [MessageController::class, 'getMessageByUserId']);
+
 Route::post('read', [MessageController::class, 'userRead']);
 /* 
 Route::get('authuser', [UserController::class, 'getAuthenticatedUser'])->middleware('auth:api');;

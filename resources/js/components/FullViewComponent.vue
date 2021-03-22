@@ -1,6 +1,7 @@
 <template>
     <div class="full-view-component">
-        <AdminNavBar />
+        <AdminNavBar v-if="this.role == 'admin'"/>
+        <BackofficeNavBar v-else-if="this.role == 'backoffice'"/>
         <div class="message-fullview">
             <table>
                 <thead>
@@ -12,7 +13,6 @@
                         <th>Start Date</th>
                         <th>Expiration Date</th>
                         <th>Viewed By</th>
-                        <th>Read By All</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -24,7 +24,6 @@
                         <td>{{ message.start_date }}</td>
                         <td>{{ message.expiration_date }}</td>
                         <td>{{ message.viewed_by }}</td>
-                        <td>{{ message.read_by_all === 0 ? false : true}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -34,14 +33,17 @@
 
 <script>
 import AdminNavBar from './AdminNavBar.vue'
+import BackofficeNavBar from './BackofficeNavBar';
 
 export default {
     components: { 
-        'AdminNavBar': AdminNavBar 
+        'AdminNavBar': AdminNavBar,
+        'BackofficeNavBar' : BackofficeNavBar
     },
     data () {
         return {
-            message: []
+            message: [],
+            role: localStorage.getItem('role')
         }
     },
     created () {
@@ -60,6 +62,8 @@ export default {
             this.message = response.data.message
         });
         
+        console.log(this.role);
+
         this.markAsRead();
     },
     methods:{
@@ -110,7 +114,7 @@ export default {
                     "Authorization": `Bearer ${access_token}`
                 }
             }).then(response => { 
-                console.log(response.data.message);
+                //console.log(response.data.message);
             });
         }
     }

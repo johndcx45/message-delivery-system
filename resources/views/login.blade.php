@@ -18,7 +18,7 @@
             }
             body {
                 font-family: 'Roboto', sans-serif;
-                background-color: #eee;
+                background-color: #fff;
                 width: 100%;
             }
         </style>

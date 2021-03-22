@@ -116,4 +116,9 @@ class MessageController extends Controller
         DB::update('UPDATE messages SET viewed_by =  ? WHERE id = ?', [$content, $id]);
         return response(['status' => 'Updated Succesfully'], 200);
     }
+
+    public function getMessageByUserId ($id) {
+        $messages = Message::where('user_id', $id)->get();
+        return response(['messages' => $messages], 200);
+    }
 }
