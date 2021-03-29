@@ -47,7 +47,8 @@ export default {
         }
     },
     created () {
-       let message_view_id = localStorage.getItem('message_view_id');
+        this.markAsRead();
+        let message_view_id = localStorage.getItem('message_view_id');
 
         let url = `http://localhost:8000/api/message/${message_view_id}`;
 
@@ -63,8 +64,6 @@ export default {
         });
         
         console.log(this.role);
-
-        this.markAsRead();
     },
     methods:{
          markAsRead() {

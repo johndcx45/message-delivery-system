@@ -10,39 +10,23 @@ class UserTableSeeder extends Seeder
 {
     public function run()
     {
-        /*User::create([
-            'name' => 'Johnny Test',
+        /* User::create([
+            'name' => 'John',
             'username' => 'bl4d3runn3r',
             'password' => Hash::make('cyberpunk'),
             'role' => 'admin'
-        ]);
-        
+        ]); */
         User::create([
-            'name' => 'Marty',
-            'username' => 'mcfly',
-            'password' => Hash::make('future'),
+            'name' => 'Bob',
+            'username' => 'def4lt',
+            'password' => Hash::make('deadsecishere'),
             'role' => 'backoffice'
         ]);
-        
         User::create([
-            'name' => 'Vincent',
-            'username' => 'nameisv',
-            'password' => Hash::make('2077'),
-            'role' => 'backoffice'
-        ]);
-        
-        User::create([
-            'name' => 'Khada Jhin',
-            'username' => 'fashionist',
-            'password' => Hash::make('1234'),
-            'role' => 'backoffice'
-        ]);
-        */
-        User::create([
-            'name' => 'Victoria',
-            'username' => 'amber',
-            'password' => Hash::make('style'),
-            'role' => 'regular'
+            'name' => 'Clarice',
+            'username' => 'clar0',
+            'password' => Hash::make('strongpassword'),
+            'role' => 'admin'
         ]);
     }
 }

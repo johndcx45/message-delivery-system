@@ -2,38 +2,37 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\AuthController;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
-
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['middleware' => ['cors', 'json.response']], function() {
+    Route::post('/login', [AuthController::class, 'login'])->name('login.api');
 });
 
-Route::post('login', [LoginController::class, 'login']);
+// Get all messages
+Route::get('/messages', [MessageController::class, 'index'])->middleware(['authenticate:admin,backoffice', 'authorize:backoffice,admin']);
 
-Route::resource('user', UserController::class)->middleware('auth:api');
+// Store the message
+Route::post('/messages', [MessageController::class, 'store'])->middleware(['authenticate:admin,backoffice', 'authorize:backoffice,admin']);
 
-Route::resource('message', MessageController::class)->middleware('auth:api');
+// Retrieve an specific message by user id
+Route::get('/messages/user/{id}', [MessageController::class, 'getMessagesByUserId'])->middleware(['authenticate:admin,backoffice', 'authorize:backoffice,admin']);
 
-Route::get('/message/{id}', [MessageController::class, 'getMessageById']);
+// Create the message
+Route::put('/messages/create', [MessageController::class, 'create'])->middleware(['authenticate:admin,backoffice', 'authorize:backoffice,admin']);
 
-Route::get('/message/user/{id}', [MessageController::class, 'getMessageByUserId']);
+// Show an specific message
+Route::get('/messages/{message}', [MessageController::class, 'show'])->middleware(['authenticate:admin,backoffice', 'authorize:backoffice,admin']);
 
-Route::post('read', [MessageController::class, 'userRead']);
-/* 
-Route::get('authuser', [UserController::class, 'getAuthenticatedUser'])->middleware('auth:api');;
+// Delete the message 
+Route::delete('/messages/{message}', [MessageController::class, 'destroy'])->middleware(['authenticate:admin,backoffice', 'authorize:backoffice,admin']);
 
-Route::get('bearertoken', [UserController::class, 'getBearerToken']); 
-*/
+// Get all users
+Route::get('/users', [UserController::class, 'index'])->middleware('authenticate:admin', 'authorize:admin');
+
+// Register an user
+Route::post('/users', [UserController::class, 'store'])->middleware('authenticate:admin', 'authorize:admin');
+
+// User read endpoint
+Route::post('read', [MessageController::class, 'userRead'])->middleware('authenticate:admin', 'authorize:admin');

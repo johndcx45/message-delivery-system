@@ -13,6 +13,7 @@ import FullViewComponent from './components/FullViewComponent';
 import BackofficeInboxComponent from './components/BackofficeInboxComponent';
 import RegularInboxComponent from './components/RegularInboxComponent';
 import FullViewRegularComponent from './components/FullViewRegComponent';
+import LoginFailedComponent from './components/LoginFailedComponent';
 
 Vue.use(VueRouter);
 
@@ -93,6 +94,10 @@ export const routes = [
     path: '/fullviewreg',
     name: 'FullViewRegular',
     component: FullViewRegularComponent
+  },
+  {
+    path: '/failed',
+    name: 'FailedLogin',
+    component: LoginFailedComponent
   }
-  
 ]

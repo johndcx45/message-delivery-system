@@ -15,11 +15,11 @@ class MessageTableSeeder extends Seeder
     {
         Message::create([
             'created_by' => 'John',
-            'subject' => 'New Project started',
+            'subject' => 'New Project announcement',
             'content' => 'This project will use new technologies and will adopt cloud migration',
             'start_date' => '03/15/2021 14:30',
             'expiration_date' => '03/20/2021 14:30',
-            'viewed_by' => 'Ana Clarice',
+            'viewed_by' => '',
             'read_by_all' => false,
             'created_at' => '03/15/2021 07:30',
             'user_id' => '1'

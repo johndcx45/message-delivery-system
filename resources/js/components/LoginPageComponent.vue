@@ -45,25 +45,14 @@ export default {
                 username: app.username,
                 password: app.password
             }).then(response => {
-                let role = response.data.user.role;
-                let status = response.status;
-                let access_token = response.data.access_token;
-                let name = response.data.user.name;
-                let user_id = response.data.user.id;
-
-                localStorage.setItem('access_token', access_token);
-                localStorage.setItem('username', app.username);
-                localStorage.setItem('name', name);
-                localStorage.setItem('role', role);
-                localStorage.setItem('user_id', user_id);
-
-                if( status === 200 && role === 'admin'){
-                    this.$router.push({ name: 'admin', query: { redirect: '/admin' }});
-                } else if( status === 200 && role === 'backoffice' ){
-                    this.$router.push({ name: 'backoffice', query: { redirect: '/backoffice' }});
-                } else if ( status === 200 && (role === 'regular' )) {
-                    this.$router.push({ name: 'regular', query: { redirect: '/regular' }});
-                } 
+                if( status === 200 ){
+                    let role = response.data.user.role;
+                  if(role === 'admin' || role === 'regular'){
+                      this.$router.push({ name: `${role}`, query: { redirect: `${role}` }});
+                  }
+                } else {
+                    this.$router.push({ name: "FailedLogin", query: { redirect: '/failed' }});
+                }
             });
 
         }

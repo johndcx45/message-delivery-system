@@ -8,8 +8,8 @@
             <div class="nav-bar-regular">
                 <nav class="nav-regular">
                     <ul class="ul-regular">
-                        <li><router-link to="/regular">Home</router-link></li>
-                        <li><router-link to="/reginbox">Inbox</router-link></li>
+                        <li><router-link to="/regular" style="text-decoration: none; color: #000;">Home</router-link></li>
+                        <li><router-link to="/reginbox" style="text-decoration: none; color: #000;">Inbox</router-link></li>
                     </ul>
                 </nav>
             </div>

@@ -29,6 +29,18 @@ class MessageController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'subject' => 'required|string|max:50|min:1',
+            'content' => 'required|string|max:100',
+            'start_date' => 'required|string|max:10',
+            'expiration_date' => 'required|string|max:10',
+        ]);
+        
+        if ($validator->fails())
+        {
+            return response(['errors' => $validator->errors()->all()], 401);
+        }
+    
         $created_by = $request->user()->name;
         $user_id = $request->user()->id;
         $subject = $request->input('subject');
@@ -72,14 +84,24 @@ class MessageController extends Controller
      */
     public function update(Request $request, Message $message)
     {
+        $validator = Validator::make($request->all(), [
+            'subject' => 'required|string|max:50|min:1',
+            'content' => 'required|string|max:100',
+            'start_date' => 'required|string|max:10',
+            'expiration_date' => 'required|string|max:10',
+        ]);
+        
+        if ($validator->fails())
+        {
+            return response(['errors' => $validator->errors()->all()], 401);
+        }
+
         $data = [
             'created_by' => $request->input('name'),
             'subject' => $request->input('subject'),
             'content' => $request->input('content'),
             'start_date' => $request->input('start_date'),
             'expiration_date' => $request->input('expiration_date'),
-            'viewed_by' => $request->input('viewed_by'),
-            'read_by_all' => $request->has('read_by_all'),
             'user_id' => $request->user()->id
         ];
 
@@ -117,7 +139,7 @@ class MessageController extends Controller
         return response(['status' => 'Updated Succesfully'], 200);
     }
 
-    public function getMessageByUserId ($id) {
+    public function getMessagesByUserId ($id) {
         $messages = Message::where('user_id', $id)->get();
         return response(['messages' => $messages], 200);
     }
