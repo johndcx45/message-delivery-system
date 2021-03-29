@@ -45,11 +45,21 @@ export default {
                 username: app.username,
                 password: app.password
             }).then(response => {
+                console.log(response);
+                let status = response.status;
+                let token = response.data.token;
+
                 if( status === 200 ){
-                    let role = response.data.user.role;
-                  if(role === 'admin' || role === 'regular'){
-                      this.$router.push({ name: `${role}`, query: { redirect: `${role}` }});
-                  }
+                    let role = response.data.role;
+                    localStorage.setItem('access_token', token);
+                    
+                    if(role === 'admin'){
+                        this.$router.push({ name: `${role}`, query: { redirect: `${role}` }});
+                    } else if(role === 'backoffice'){
+                        this.$router.push({ name: `${role}`, query: { redirect: `${role}` }});
+                    } else if(role === 'regular') {
+                        this.$router.push({ name: `${role}`, query: { redirect: `${role}` }});
+                    }
                 } else {
                     this.$router.push({ name: "FailedLogin", query: { redirect: '/failed' }});
                 }

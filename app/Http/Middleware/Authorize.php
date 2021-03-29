@@ -31,7 +31,7 @@ class Authorize
                 return $next($request);
             }
         } else {
-            return response(['message' => 'You do not have permissions to access this resource.'], 401);
+            return response(['message' => 'You do not have permissions to access this resource.'], 403);
         }
     }
 }

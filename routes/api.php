@@ -6,33 +6,25 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\AuthController;
 
-Route::group(['middleware' => ['cors', 'json.response']], function() {
-    Route::post('/login', [AuthController::class, 'login'])->name('login.api');
+
+Route::post('/login', [AuthController::class, 'login'])->name('login.api');
+
+
+// Authenticaded routes
+Route::group(['middleware' => ['authenticate']], function() {
+    #region Messages
+        Route::get('/message', [MessageController::class, 'index'])->middleware(['authorize:admin,backoffice,regular']);
+        Route::post('/message', [MessageController::class, 'store'])->middleware(['authorize:backoffice,admin']);
+        Route::get('/message/user/{id}', [MessageController::class, 'getMessagesByUserId'])->middleware(['authorize:backoffice,admin']);
+        Route::put('/message/create', [MessageController::class, 'create'])->middleware(['authorize:backoffice,admin']);
+        Route::delete('/message/{message}', [MessageController::class, 'destroy'])->middleware(['authorize:backoffice,admin']);
+        Route::get('/message/{message}', [MessageController::class, 'show'])->middleware(['authorize:backoffice,admin']);
+    #endregion
+
+    #region Users
+        Route::get('/user', [UserController::class, 'index'])->middleware('authorize:admin');
+        Route::post('/user', [UserController::class, 'store'])->middleware('authorize:admin');
+        Route::post('read', [MessageController::class, 'userRead'])->middleware('authorize:admin');
+    #endregion
 });
 
-// Get all messages
-Route::get('/messages', [MessageController::class, 'index'])->middleware(['authenticate:admin,backoffice', 'authorize:backoffice,admin']);
-
-// Store the message
-Route::post('/messages', [MessageController::class, 'store'])->middleware(['authenticate:admin,backoffice', 'authorize:backoffice,admin']);
-
-// Retrieve an specific message by user id
-Route::get('/messages/user/{id}', [MessageController::class, 'getMessagesByUserId'])->middleware(['authenticate:admin,backoffice', 'authorize:backoffice,admin']);
-
-// Create the message
-Route::put('/messages/create', [MessageController::class, 'create'])->middleware(['authenticate:admin,backoffice', 'authorize:backoffice,admin']);
-
-// Show an specific message
-Route::get('/messages/{message}', [MessageController::class, 'show'])->middleware(['authenticate:admin,backoffice', 'authorize:backoffice,admin']);
-
-// Delete the message 
-Route::delete('/messages/{message}', [MessageController::class, 'destroy'])->middleware(['authenticate:admin,backoffice', 'authorize:backoffice,admin']);
-
-// Get all users
-Route::get('/users', [UserController::class, 'index'])->middleware('authenticate:admin', 'authorize:admin');
-
-// Register an user
-Route::post('/users', [UserController::class, 'store'])->middleware('authenticate:admin', 'authorize:admin');
-
-// User read endpoint
-Route::post('read', [MessageController::class, 'userRead'])->middleware('authenticate:admin', 'authorize:admin');

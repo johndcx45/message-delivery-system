@@ -2605,10 +2605,29 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
         username: app.username,
         password: app.password
       }).then(function (response) {
-        if (status === 200) {
-          var role = response.data.user.role;
+        console.log(response);
+        var status = response.status;
+        var token = response.data.token;
 
-          if (role === 'admin' || role === 'regular') {
+        if (status === 200) {
+          var role = response.data.role;
+          localStorage.setItem('access_token', token);
+
+          if (role === 'admin') {
+            _this.$router.push({
+              name: "".concat(role),
+              query: {
+                redirect: "".concat(role)
+              }
+            });
+          } else if (role === 'backoffice') {
+            _this.$router.push({
+              name: "".concat(role),
+              query: {
+                redirect: "".concat(role)
+              }
+            });
+          } else if (role === 'regular') {
             _this.$router.push({
               name: "".concat(role),
               query: {
@@ -3166,21 +3185,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "routes": () => (/* binding */ routes)
 /* harmony export */ });
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var _components_LoginPageComponent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/LoginPageComponent */ "./resources/js/components/LoginPageComponent.vue");
-/* harmony import */ var _components_BackofficePageComponent__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/BackofficePageComponent */ "./resources/js/components/BackofficePageComponent.vue");
-/* harmony import */ var _components_RegularPageComponent__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/RegularPageComponent */ "./resources/js/components/RegularPageComponent.vue");
-/* harmony import */ var _components_AdminPageComponent__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/AdminPageComponent */ "./resources/js/components/AdminPageComponent.vue");
-/* harmony import */ var _components_ShowMessagesComponent__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! .//components/ShowMessagesComponent */ "./resources/js/components/ShowMessagesComponent.vue");
-/* harmony import */ var _components_CreateAnnouncementComponent__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/CreateAnnouncementComponent */ "./resources/js/components/CreateAnnouncementComponent.vue");
-/* harmony import */ var _components_EditAnnouncementComponent__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/EditAnnouncementComponent */ "./resources/js/components/EditAnnouncementComponent.vue");
-/* harmony import */ var _components_UsersPageComponent__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/UsersPageComponent */ "./resources/js/components/UsersPageComponent.vue");
-/* harmony import */ var _components_FullViewComponent__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/FullViewComponent */ "./resources/js/components/FullViewComponent.vue");
-/* harmony import */ var _components_BackofficeInboxComponent__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/BackofficeInboxComponent */ "./resources/js/components/BackofficeInboxComponent.vue");
-/* harmony import */ var _components_RegularInboxComponent__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/RegularInboxComponent */ "./resources/js/components/RegularInboxComponent.vue");
-/* harmony import */ var _components_FullViewRegComponent__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/FullViewRegComponent */ "./resources/js/components/FullViewRegComponent.vue");
-/* harmony import */ var _components_LoginFailedComponent__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/LoginFailedComponent */ "./resources/js/components/LoginFailedComponent.vue");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var _components_LoginPageComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/LoginPageComponent */ "./resources/js/components/LoginPageComponent.vue");
+/* harmony import */ var _components_BackofficePageComponent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/BackofficePageComponent */ "./resources/js/components/BackofficePageComponent.vue");
+/* harmony import */ var _components_RegularPageComponent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/RegularPageComponent */ "./resources/js/components/RegularPageComponent.vue");
+/* harmony import */ var _components_AdminPageComponent__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/AdminPageComponent */ "./resources/js/components/AdminPageComponent.vue");
+/* harmony import */ var _components_ShowMessagesComponent__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! .//components/ShowMessagesComponent */ "./resources/js/components/ShowMessagesComponent.vue");
+/* harmony import */ var _components_CreateAnnouncementComponent__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/CreateAnnouncementComponent */ "./resources/js/components/CreateAnnouncementComponent.vue");
+/* harmony import */ var _components_EditAnnouncementComponent__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/EditAnnouncementComponent */ "./resources/js/components/EditAnnouncementComponent.vue");
+/* harmony import */ var _components_UsersPageComponent__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/UsersPageComponent */ "./resources/js/components/UsersPageComponent.vue");
+/* harmony import */ var _components_FullViewComponent__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/FullViewComponent */ "./resources/js/components/FullViewComponent.vue");
+/* harmony import */ var _components_BackofficeInboxComponent__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/BackofficeInboxComponent */ "./resources/js/components/BackofficeInboxComponent.vue");
+/* harmony import */ var _components_RegularInboxComponent__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/RegularInboxComponent */ "./resources/js/components/RegularInboxComponent.vue");
+/* harmony import */ var _components_FullViewRegComponent__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/FullViewRegComponent */ "./resources/js/components/FullViewRegComponent.vue");
+/* harmony import */ var _components_LoginFailedComponent__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/LoginFailedComponent */ "./resources/js/components/LoginFailedComponent.vue");
 
 
 
@@ -3196,75 +3215,75 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_1__.default.use(vue_router__WEBPACK_IMPORTED_MODULE_0__.default);
+vue__WEBPACK_IMPORTED_MODULE_13__.default.use(vue_router__WEBPACK_IMPORTED_MODULE_14__.default);
 var routes = [{
   path: '/login',
   name: 'login',
-  component: _components_LoginPageComponent__WEBPACK_IMPORTED_MODULE_2__.default,
+  component: _components_LoginPageComponent__WEBPACK_IMPORTED_MODULE_0__.default,
   meta: {
     auth: false
   }
 }, {
   path: '/backoffice',
   name: 'backoffice',
-  component: _components_BackofficePageComponent__WEBPACK_IMPORTED_MODULE_3__.default,
+  component: _components_BackofficePageComponent__WEBPACK_IMPORTED_MODULE_1__.default,
   meta: {
     auth: true
   }
 }, {
   path: '/admin',
   name: 'admin',
-  component: _components_AdminPageComponent__WEBPACK_IMPORTED_MODULE_5__.default,
+  component: _components_AdminPageComponent__WEBPACK_IMPORTED_MODULE_3__.default,
   meta: {
     auth: true
   }
 }, {
   path: '/regular',
   name: 'regular',
-  component: _components_RegularPageComponent__WEBPACK_IMPORTED_MODULE_4__.default,
+  component: _components_RegularPageComponent__WEBPACK_IMPORTED_MODULE_2__.default,
   meta: {
     auth: true
   }
 }, {
   path: '/view',
   name: 'View',
-  component: _components_ShowMessagesComponent__WEBPACK_IMPORTED_MODULE_6__.default
+  component: _components_ShowMessagesComponent__WEBPACK_IMPORTED_MODULE_4__.default
 }, {
   path: '/create',
   name: 'Create',
-  component: _components_CreateAnnouncementComponent__WEBPACK_IMPORTED_MODULE_7__.default
+  component: _components_CreateAnnouncementComponent__WEBPACK_IMPORTED_MODULE_5__.default
 }, {
   path: '/home',
   name: 'Home',
-  component: _components_AdminPageComponent__WEBPACK_IMPORTED_MODULE_5__.default
+  component: _components_AdminPageComponent__WEBPACK_IMPORTED_MODULE_3__.default
 }, {
   path: '/edit',
   name: 'Edit',
-  component: _components_EditAnnouncementComponent__WEBPACK_IMPORTED_MODULE_8__.default
+  component: _components_EditAnnouncementComponent__WEBPACK_IMPORTED_MODULE_6__.default
 }, {
   path: '/register',
   name: 'Register',
-  component: _components_UsersPageComponent__WEBPACK_IMPORTED_MODULE_9__.default
+  component: _components_UsersPageComponent__WEBPACK_IMPORTED_MODULE_7__.default
 }, {
   path: '/fullview',
   name: 'FullView',
-  component: _components_FullViewComponent__WEBPACK_IMPORTED_MODULE_10__.default
+  component: _components_FullViewComponent__WEBPACK_IMPORTED_MODULE_8__.default
 }, {
   path: '/inbox',
   name: 'BackofficeInbox',
-  component: _components_BackofficeInboxComponent__WEBPACK_IMPORTED_MODULE_11__.default
+  component: _components_BackofficeInboxComponent__WEBPACK_IMPORTED_MODULE_9__.default
 }, {
   path: '/reginbox',
   name: 'RegularInbox',
-  component: _components_RegularInboxComponent__WEBPACK_IMPORTED_MODULE_12__.default
+  component: _components_RegularInboxComponent__WEBPACK_IMPORTED_MODULE_10__.default
 }, {
   path: '/fullviewreg',
   name: 'FullViewRegular',
-  component: _components_FullViewRegComponent__WEBPACK_IMPORTED_MODULE_13__.default
+  component: _components_FullViewRegComponent__WEBPACK_IMPORTED_MODULE_11__.default
 }, {
   path: '/failed',
   name: 'FailedLogin',
-  component: _components_LoginFailedComponent__WEBPACK_IMPORTED_MODULE_14__.default
+  component: _components_LoginFailedComponent__WEBPACK_IMPORTED_MODULE_12__.default
 }];
 
 /***/ }),

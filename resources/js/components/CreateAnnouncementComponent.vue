@@ -62,7 +62,7 @@ export default {
             let startDate = app.startDate;
             let expirationDate = app.expirationDate;
 
-            let url = 'http://localhost:8000/api/message'
+            let url = 'http://localhost:8000/api/message';
 
             let err = null;
 

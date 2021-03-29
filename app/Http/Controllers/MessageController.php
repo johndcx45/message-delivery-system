@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Resources\MessageResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class MessageController extends Controller
 {
@@ -41,8 +42,10 @@ class MessageController extends Controller
             return response(['errors' => $validator->errors()->all()], 401);
         }
     
-        $created_by = $request->user()->name;
-        $user_id = $request->user()->id;
+        //$created_by = $request->user()->name;
+        $created_by = Auth::guard('api')->user()->name;
+        //$user_id = $request->user()->id;
+        $user_id = Auth::guard('api')->user()->id;
         $subject = $request->input('subject');
         $content = $request->input('content');
         $start_date = $request->input('start_date');
