@@ -85,7 +85,7 @@ class MessageController extends Controller
      * @param  \App\Models\Message  $message
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Message $message)
+    public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
             'subject' => 'required|string|max:50|min:1',
@@ -99,13 +99,14 @@ class MessageController extends Controller
             return response(['errors' => $validator->errors()->all()], 401);
         }
 
+        $message = Message::find($id);
+        
         $data = [
             'created_by' => $request->input('name'),
             'subject' => $request->input('subject'),
             'content' => $request->input('content'),
             'start_date' => $request->input('start_date'),
-            'expiration_date' => $request->input('expiration_date'),
-            'user_id' => $request->user()->id
+            'expiration_date' => $request->input('expiration_date')
         ];
 
         $message->update($data);

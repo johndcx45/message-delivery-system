@@ -8,6 +8,7 @@
             <div class="login-form">
                 <form method="POST" action="/homepage" @submit.prevent="login">
                     <input type="hidden" name="_token" :value="csrf">
+                    <validation-provider rules="required" v-slot="v">
                     <label class="label-text">Username</label>
                     <input type="text" class="input-text" id="input-username" 
                         placeholder="Username" v-model="username" required>
@@ -22,10 +23,13 @@
 </template>
 
 <script>
-
+import { ValidationProvider } from 'vee-validate';
 const axios = require('axios')
 
 export default {
+    components: {
+        ValidationProvider
+    },
     computed: {
         csrf(){
             return document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -47,9 +51,9 @@ export default {
             }).then(response => {
                 console.log(response);
                 let status = response.status;
-                let token = response.data.token;
+                let token = response.data.token;    
 
-                if( status === 200 ){
+               if( status === 200 ){
                     let role = response.data.role;
                     localStorage.setItem('access_token', token);
                     
@@ -63,7 +67,11 @@ export default {
                 } else {
                     this.$router.push({ name: "FailedLogin", query: { redirect: '/failed' }});
                 }
-            });
+            }).catch(error => {
+                if(error) {
+                    this.$alert('Login failed, check your credentials');
+                }
+            })
 
         }
     }

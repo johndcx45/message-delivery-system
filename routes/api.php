@@ -16,7 +16,7 @@ Route::group(['middleware' => ['authenticate']], function() {
         Route::get('/message', [MessageController::class, 'index'])->middleware(['authorize:admin,backoffice,regular']);
         Route::post('/message', [MessageController::class, 'store'])->middleware(['authorize:backoffice,admin']);
         Route::get('/message/user/{id}', [MessageController::class, 'getMessagesByUserId'])->middleware(['authorize:backoffice,admin']);
-        Route::put('/message/create', [MessageController::class, 'create'])->middleware(['authorize:backoffice,admin']);
+        Route::put('/message/{message}', [MessageController::class, 'update'])->middleware(['authorize:backoffice,admin']);
         Route::delete('/message/{message}', [MessageController::class, 'destroy'])->middleware(['authorize:backoffice,admin']);
         Route::get('/message/{message}', [MessageController::class, 'show'])->middleware(['authorize:backoffice,admin']);
     #endregion

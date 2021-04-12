@@ -79,7 +79,7 @@ export default {
 
             let name = app.name;
             let username = app.username;
-            let role = app.role;
+            let role = app.role.toLowerCase();
             let password = app.password;
 
             let url = 'http://localhost:8000/api/user'
