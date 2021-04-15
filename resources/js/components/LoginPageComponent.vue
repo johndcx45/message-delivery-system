@@ -8,7 +8,6 @@
             <div class="login-form">
                 <form method="POST" action="/homepage" @submit.prevent="login">
                     <input type="hidden" name="_token" :value="csrf">
-                    <validation-provider rules="required" v-slot="v">
                     <label class="label-text">Username</label>
                     <input type="text" class="input-text" id="input-username" 
                         placeholder="Username" v-model="username" required>
@@ -42,6 +41,12 @@ export default {
             has_error: false
         }
     },
+    created() {
+        if(localStorage.getItem('access_token') != null) {
+            let role = localStorage.getItem('role');
+            this.$router.push({ name: `${role}`, query: { redirect: `${role}` }});
+        }
+    },
     methods: {
         login() {
             var app = this;            
@@ -56,6 +61,7 @@ export default {
                if( status === 200 ){
                     let role = response.data.role;
                     localStorage.setItem('access_token', token);
+                    localStorage.setItem('role', role);
                     
                     if(role === 'admin'){
                         this.$router.push({ name: `${role}`, query: { redirect: `${role}` }});

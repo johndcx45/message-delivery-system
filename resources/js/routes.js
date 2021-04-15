@@ -66,11 +66,6 @@ export const routes = [
     component: AdminPageComponent
   },
   {
-    path: '/edit',
-    name: 'Edit',
-    component: EditAnnouncementComponent
-  },
-  {
     path: '/register',
     name: 'Register',
     component: UsersPageComponent

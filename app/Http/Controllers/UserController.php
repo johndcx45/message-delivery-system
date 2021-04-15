@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Resources\UserResource;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+
+
 class UserController extends Controller
 {
     /**
@@ -29,9 +33,9 @@ class UserController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:30|min:4',
-            'username' => 'required|string|max:20|min:3',
-            'role' => 'required|string|min:5',
-            'password' => 'required|string|max:50|min:8'
+            'username' => 'required|string|max:25|min:3',
+            'role' => 'required|string',
+            'password' => 'required|string|max:30|min:8'
         ]);
         
         if ($validator->fails())
@@ -88,11 +92,18 @@ class UserController extends Controller
         //
     }
 
-    public function getBearerToken (Request $request) {
+    public function getBearerToken (Request $request) 
+    {
         return response(['bearerToken' => $request->bearerToken()]);
     }
 
-    public function getAuthenticatedUser (Request $request){
+    public function getAuthenticatedUser (Request $request)
+    {
         return $request->user()->name;
+    }
+
+    public function getUserId()
+    {
+        return response(['user_id' => Auth::guard('api')->user()->id], 200);
     }
 }

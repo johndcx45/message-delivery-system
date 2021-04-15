@@ -7,28 +7,11 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    
-    /* public function register(Request $request)
-    {
-        $validatedData = $request->validate([
-            'name' => 'required|max:55',
-            'username' => 'email|required|unique:users',
-            'password' => 'required|confirmed',
-            'role' => 'required'
-        ]);
-
-        $validatedData['password'] = bcrypt($request->password);
-
-        $user = User::create($validatedData);
-
-        $accessToken = $user->createToken('authToken')->accessToken;
-
-        return response([ 'user' => $user, 'access_token' => $accessToken]);
-    } */
-
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -53,12 +36,11 @@ class AuthController extends Controller
         } else {
             $response = ["message" =>'User does not exist'];
             return response($response, 422);
-        }
-        
+        }  
     }
 
     public function logout (Request $request) {
-        $token = $request->user()->token();
+        $token = Auth::guard('api')->user()->token();
         $token->revoke();
         $response = ['message' => 'You have been successfully logged out!'];
         return response($response, 200);

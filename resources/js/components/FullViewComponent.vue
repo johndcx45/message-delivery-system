@@ -2,7 +2,10 @@
     <div class="full-view-component">
         <AdminNavBar v-if="this.role == 'admin'"/>
         <BackofficeNavBar v-else-if="this.role == 'backoffice'"/>
-        <div class="message-fullview">
+        <div v-if="loading">
+            <b-spinner label="Loading..."></b-spinner>
+        </div>
+        <div class="mx-auto" style="width: 800px;" v-else>
             <table>
                 <thead>
                     <tr>
@@ -23,7 +26,7 @@
                         <td>{{ message.content }}</td>
                         <td>{{ message.start_date }}</td>
                         <td>{{ message.expiration_date }}</td>
-                        <td>{{ message.viewed_by }}</td>
+                        <td>{{ viewed_by }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -43,14 +46,17 @@ export default {
     data () {
         return {
             message: [],
-            role: localStorage.getItem('role')
+            viewed_by: null,
+            role: localStorage.getItem('role'),
+            loading: false
         }
     },
     created () {
+        this.loading = true;
         this.markAsRead();
-        let message_view_id = localStorage.getItem('message_view_id');
+        let message_id = localStorage.getItem('message_id');
 
-        let url = `http://localhost:8000/api/message/${message_view_id}`;
+        let url = `http://localhost:8000/api/message/${message_id}`;
 
         let access_token = localStorage.getItem('access_token');
 
@@ -64,46 +70,33 @@ export default {
         });
         
         console.log(this.role);
+        this.loading = false;
     },
     methods:{
          markAsRead() {
-            let message_view_id = localStorage.getItem('message_view_id');
+            let message_id = localStorage.getItem('message_id');
+            let user_id = localStorage.getItem('user_id');
 
-            let url = `http://localhost:8000/api/message/${message_view_id}`;
+            let url = `http://localhost:8000/api/read`;
 
             let access_token = localStorage.getItem('access_token');
 
-            const fetchedData = this.axios.get( url, { headers: {
+            const fetchedData = this.axios.post( url,{
+                user_id: user_id,
+                message_id: message_id
+            }, { headers: {
                 "Access-Control-Allow-Origin" : "*",
                 "Content-type": "Application/json",
                 "Authorization": `Bearer ${access_token}`
                 }
-            }).then(response => { 
-                
-                let id = localStorage.getItem('message_view_id');
-                let name = localStorage.getItem('name');
-                let message = response.data.message;
-                 
-                if(!message.viewed_by.includes(name) || message.viewed_by == '') { 
-                    let url = `http://localhost:8000/api/read`;
-
-                    let access_token = localStorage.getItem('access_token');
-                    const config = { 
-                        headers: { Authorization: `Bearer ${access_token}`}
-                    }
-
-                    let response = axios.post(url, {
-                        id: id,
-                        name: name
-                    }, config
-                    ); 
-                }
-            }).then(() => this.getMessage());
+            }).then(() => {
+                this.fetchViewedBy();
+            })
         },
         getMessage() {
-            let message_view_id = localStorage.getItem('message_view_id');
-
-            let url = `http://localhost:8000/api/message/${message_view_id}`;
+            let message_id = localStorage.getItem('message_id');
+            console.log(this.message_id);
+            let url = `http://localhost:8000/api/message/${message_id}`;
 
             let access_token = localStorage.getItem('access_token');
 
@@ -115,6 +108,33 @@ export default {
             }).then(response => { 
                 //console.log(response.data.message);
             });
+        },
+        fetchViewedBy() {
+            let viewedByUrl = `http://localhost:8000/api/viewedby`;
+            let access_token = localStorage.getItem('access_token');
+                        
+            const viewedByResponse = this.axios.get(viewedByUrl, { headers: {
+                "Access-Control-Allow-Origin" : "*",
+                "Content-type": "Application/json",
+                "Authorization": `Bearer ${access_token}`
+                }
+            }).then(res => {
+               let viewedByString = this.convertViewedByToString(res.data.viewed_by);
+               console.log(viewedByString);
+               this.viewed_by = viewedByString;
+            });
+        },
+        convertViewedByToString(viewed_by) {
+            let string = viewed_by[0].name;
+            
+            for(let i in viewed_by) {
+                if(i != 0) {
+                    string = string + ', ' + viewed_by[i].name;
+                }
+            }
+
+            console.log(string);
+            return string;
         }
     }
 }

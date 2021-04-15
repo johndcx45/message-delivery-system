@@ -1,5 +1,6 @@
 <template>
     <div class="nav-bar-component">
+        <LogoutButton />
         <div class="header">
             <div class="h1-img-header">
                 <img :src="'/img/time-machine.svg'" class="time-machine-icon">
@@ -11,7 +12,6 @@
                         <li><router-link to="/admin" style="text-decoration: none; color: #000;">Home</router-link></li>
                         <li><router-link to="/view" style="text-decoration: none; color: #000;">Announcements</router-link></li>
                         <li><router-link to="/create" style="text-decoration: none; color: #000;">Create Announcement</router-link></li>
-                        <li><router-link to="/edit" style="text-decoration: none; color: #000;">Edit Announcement</router-link></li>
                         <li><router-link to="/register" style="text-decoration: none; color: #000;">Register User</router-link></li>
                     </ul>
                 </nav>
@@ -21,8 +21,10 @@
 </template>
 
 <script>
+import LogoutButton from './LogoutButton.vue'
 export default {
-
+  components: { 'LogoutButton': LogoutButton },
+ 
 }
 </script>
 

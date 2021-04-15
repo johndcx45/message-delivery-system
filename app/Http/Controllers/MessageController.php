@@ -31,10 +31,10 @@ class MessageController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'subject' => 'required|string|max:50|min:1',
-            'content' => 'required|string|max:100',
-            'start_date' => 'required|string|max:10',
-            'expiration_date' => 'required|string|max:10',
+            'subject' => 'required|string|max:60|min:1',
+            'content' => 'required|string|max:150|min:1',
+            'start_date' => 'required|string',
+            'expiration_date' => 'required|string',
         ]);
         
         if ($validator->fails())
@@ -100,18 +100,16 @@ class MessageController extends Controller
         }
 
         $message = Message::find($id);
-        
-        $data = [
-            'created_by' => $request->input('name'),
+
+        DB::table('messages')->where('id', $id)->update([
+            'created_by' => $message->created_by,
             'subject' => $request->input('subject'),
             'content' => $request->input('content'),
             'start_date' => $request->input('start_date'),
             'expiration_date' => $request->input('expiration_date')
-        ];
+        ]);
 
-        $message->update($data);
-
-        return response(['message' => new MessageResource($message), 'status' => 'Updated successfully']);
+        return response(['status' => 'Updated successfully'], 200);
     }
 
     /**
@@ -135,12 +133,23 @@ class MessageController extends Controller
     }
     
     public function userRead(Request $request) {
-        $id = $request->input('id');
-        $message = Message::find($id);
-        $content = $message->viewed_by . $request->input('name') . ',';
+        $user_id = $request->input('user_id');
+        $message_id = $request->input('message_id');
 
-        DB::update('UPDATE messages SET viewed_by =  ? WHERE id = ?', [$content, $id]);
-        return response(['status' => 'Updated Succesfully'], 200);
+        $result = DB::table('viewed_by')->insert([
+            'user_id' => $user_id,
+            'message_id' => $message_id
+        ]);
+
+        return response(['message' => 'Updated viewed_by table successfully'], 200);
+    }
+
+    public function getUsersWhoReadTheMessage(Request $request)
+    {
+        $user_id = $request->input('user_id');
+        $result = DB::table('users')->join('viewed_by', 'viewed_by.user_id', '=', 'users.id')
+            ->select('name')->distinct()->get();
+        return response(['viewed_by' => $result], 200);
     }
 
     public function getMessagesByUserId ($id) {

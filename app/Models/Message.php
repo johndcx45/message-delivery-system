@@ -11,7 +11,7 @@ class Message extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'created_by', 'subject', 'content', 'start_date', 'expiration_date', 'viewed_by', 'read_by_all', 'user_id'
+        'created_by', 'subject', 'content', 'start_date', 'expiration_date', 'user_id'
     ];
 
     protected $dates = ['deleted_at'];

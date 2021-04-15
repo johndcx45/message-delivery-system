@@ -21,11 +21,9 @@ class CreateMessagesTable extends Migration
             $table->string('content');
             $table->string('start_date');
             $table->string('expiration_date');
-            $table->string('viewed_by');
-            $table->boolean('read_by_all');
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
-            
+                
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
         });

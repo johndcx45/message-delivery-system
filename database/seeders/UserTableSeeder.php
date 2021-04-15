@@ -10,16 +10,16 @@ class UserTableSeeder extends Seeder
 {
     public function run()
     {
-        /* User::create([
+        User::create([
             'name' => 'John',
             'username' => 'bl4d3runn3r',
             'password' => Hash::make('cyberpunk'),
             'role' => 'admin'
-        ]); */
+        ]);
         User::create([
             'name' => 'Bob',
-            'username' => 'def4lt',
-            'password' => Hash::make('deadsecishere'),
+            'username' => 'bobbybrown',
+            'password' => Hash::make('bufferoverflow'),
             'role' => 'backoffice'
         ]);
         User::create([
@@ -27,6 +27,12 @@ class UserTableSeeder extends Seeder
             'username' => 'clar0',
             'password' => Hash::make('strongpassword'),
             'role' => 'admin'
+        ]); 
+        User::create([
+            'name' => 'Marty',
+            'username' => 'mcfly',
+            'password' => Hash::make('backtothefuture'),
+            'role' => 'regular'
         ]);
     }
 }
