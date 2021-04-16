@@ -2,34 +2,41 @@
     <div class="full-view-component">
         <AdminNavBar v-if="this.role == 'admin'"/>
         <BackofficeNavBar v-else-if="this.role == 'backoffice'"/>
+        <h3>Announcement Details</h3>
         <div v-if="loading">
-            <b-spinner label="Loading..."></b-spinner>
+            <div class="text-center mt-5">
+                <b-spinner label="Loading..."></b-spinner>
+            </div>
+            
         </div>
-        <div class="mx-auto" style="width: 800px;" v-else>
-            <table>
-                <thead>
+        <div v-else>
+            <div class="mx-auto" style="width: 600px;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Created by</th>
+                            <th>Subject</th>
+                            <th>Content</th>
+                            <th>Start Date</th>
+                            <th>Expiration Date</th>
+                            <th>Viewed By</th>
+                        </tr>
+                    </thead>
+                    <tbody>
                     <tr>
-                        <th>Id</th>
-                        <th>Created by</th>
-                        <th>Subject</th>
-                        <th>Content</th>
-                        <th>Start Date</th>
-                        <th>Expiration Date</th>
-                        <th>Viewed By</th>
-                    </tr>
-                </thead>
-                <tbody>
-                   <tr>
-                        <td>{{ message.id }}</td>
-                        <td>{{ message.created_by }}</td>
-                        <td>{{ message.subject }}</td>
-                        <td>{{ message.content }}</td>
-                        <td>{{ message.start_date }}</td>
-                        <td>{{ message.expiration_date }}</td>
-                        <td>{{ viewed_by }}</td>
-                    </tr>
-                </tbody>
-            </table>
+                            <td>{{ message.id }}</td>
+                            <td>{{ message.created_by }}</td>
+                            <td>{{ message.subject }}</td>
+                            <td>{{ message.content }}</td>
+                            <td>{{ message.start_date }}</td>
+                            <td>{{ message.expiration_date }}</td>
+                            <td v-if="!viewedByLoading">{{ viewed_by }}</td>
+                            <td v-else><span style="font-weight: bold;">Loading...</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </template>
@@ -47,6 +54,7 @@ export default {
         return {
             message: [],
             viewed_by: null,
+            viewedByLoading: false,
             role: localStorage.getItem('role'),
             loading: false
         }
@@ -67,10 +75,8 @@ export default {
             }
         }).then(response => {
             this.message = response.data.message
+            this.loading = false;
         });
-        
-        console.log(this.role);
-        this.loading = false;
     },
     methods:{
          markAsRead() {
@@ -93,23 +99,8 @@ export default {
                 this.fetchViewedBy();
             })
         },
-        getMessage() {
-            let message_id = localStorage.getItem('message_id');
-            console.log(this.message_id);
-            let url = `http://localhost:8000/api/message/${message_id}`;
-
-            let access_token = localStorage.getItem('access_token');
-
-            const fetchedData = this.axios.get( url, { headers: {
-                    "Access-Control-Allow-Origin" : "*",
-                    "Content-type": "Application/json",
-                    "Authorization": `Bearer ${access_token}`
-                }
-            }).then(response => { 
-                //console.log(response.data.message);
-            });
-        },
         fetchViewedBy() {
+            this.viewedByLoading = true;
             let viewedByUrl = `http://localhost:8000/api/viewedby`;
             let access_token = localStorage.getItem('access_token');
                         
@@ -122,6 +113,7 @@ export default {
                let viewedByString = this.convertViewedByToString(res.data.viewed_by);
                console.log(viewedByString);
                this.viewed_by = viewedByString;
+               this.viewedByLoading = false;
             });
         },
         convertViewedByToString(viewed_by) {

@@ -21,7 +21,7 @@
                         <td>{{ message.start_date }}</td>
                         <td>{{ message.expiration_date }}</td>
                         <td>{{ message.subject }}</td>                        
-                        <td><button class="btn btn-view" v-on:click="viewMessage(message.id)"><router-link to="/fullviewreg" style="text-decoration: none; color: #fff;">View</router-link></button></td> 
+                        <td><b-button variant="primary" v-on:click="viewMessage(message.id)"><router-link to="/fullview" style="text-decoration: none; color: white;">View</router-link></b-button></td> 
                     </tr>
                 </tbody>
             </table>

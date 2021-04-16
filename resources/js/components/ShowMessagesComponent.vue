@@ -3,8 +3,8 @@
         <AdminNavBar v-if="this.role == 'admin'"/>
         <BackofficeNavBar v-else-if="this.role == 'backoffice'"/>
         <h3>Announcements</h3>
-        <div v-if="loading" class="mx-auto" style="width: 100%;">
-            <b-spinner label="Loading..." class="mx-auto"></b-spinner>
+        <div v-if="loading" class="text-center">
+            <b-spinner label="Loading..."></b-spinner>
         </div>
         <div class="content-view" v-else>
             <table>
@@ -32,23 +32,6 @@
                     </tr>
                     <b-modal id="edit-announcement">
                             <b-form @submit.prevent="editMessage">
-                                 <b-form-group
-                                    id="input-group-0"
-                                    label="ID:"
-                                    label-for="input-id"
-                                >
-                                    <b-form-input
-                                    id="input-id"
-                                    v-model="messageToShow.id"
-                                    placeholder="ID of the message"
-                                    aria-describedby="input-id-live-feedback"
-                                    :state="validateState('id')"
-                                    ></b-form-input>
-                                    <b-form-invalid-feedback
-                                    id="input-id-live-feedback"
-                                    >ID can't be null</b-form-invalid-feedback>
-                                </b-form-group>
-                                
                                  <b-form-group
                                     id="input-group-1"
                                     label="Subject:"
@@ -128,7 +111,6 @@ export default {
     },
     data () {
         return {
-            id: null,
             subject: null,
             content: null,
             startDate: null,
@@ -150,9 +132,6 @@ export default {
         }
     },
     validations: {
-        id: {
-            required
-        },
         subject: {
             required,
             minLength: minLength(1),
@@ -171,7 +150,7 @@ export default {
         },
     },
     created () {
-        this.loading     = true;
+        this.loading = true;
         this.getMessages();
     },
     methods: {
@@ -261,7 +240,7 @@ export default {
                 var app = this;
                 let access_token = localStorage.getItem('access_token');
 
-                let id = app.id;
+                let id = this.messageToShow.id;
                 let subject = app.subject;
                 let content = app.content;
                 let startDate = app.startDate;

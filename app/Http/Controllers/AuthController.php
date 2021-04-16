@@ -21,7 +21,7 @@ class AuthController extends Controller
         
         if ($validator->fails())
         {
-            return response(['errors' => $validator->errors()->all()], 401);
+            return response(['errors' => $validator->errors()->all()], 400);
         }
         $user = User::where('username', $request->username)->first();
 
@@ -30,12 +30,12 @@ class AuthController extends Controller
                 $token = $user->createToken('Laravel Password Grant Client')->accessToken;
                 return response(['token' => $token, 'role' => $user->role], 200);
             } else {
-                $response = ["message" => "Password mismatch"];
-                return response($response, 422);
+                $response = ["message" => "Invalid Credentials"];
+                return response($response, 401);
             }
         } else {
-            $response = ["message" =>'User does not exist'];
-            return response($response, 422);
+            $response = ["message" =>'Invalid Credentials'];
+            return response($response, 401);
         }  
     }
 

@@ -15,19 +15,13 @@
                 </nav>
             </div>
         </div>
-        <b-button variant="danger" :click="logout"><router-link to="/login">Logout</router-link></b-button>
     </div>
 </template>
 
 <script>
 import LogoutButton from './LogoutButton.vue';
 export default {
-  components: { 'LogoutButton': LogoutButton },
-    methods: {
-        logout() {
-            alert('You have logged out!');
-        }
-    }
+  components: { 'LogoutButton': LogoutButton }
 }
 </script>
 

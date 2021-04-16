@@ -89,10 +89,5 @@ export const routes = [
     path: '/fullviewreg',
     name: 'FullViewRegular',
     component: FullViewRegularComponent
-  },
-  {
-    path: '/failed',
-    name: 'FailedLogin',
-    component: LoginFailedComponent
   }
 ]

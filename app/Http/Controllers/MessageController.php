@@ -19,7 +19,12 @@ class MessageController extends Controller
     public function index()
     {
         $messages = Message::all();
-        return response(['messages' => MessageResource::collection($messages), 'status' => 'Retrieved Successfully'], 200);
+
+        if(!$messages->isEmpty()) {
+            return response(['messages' => MessageResource::collection($messages), 'status' => 'Retrieved Successfully'], 200);
+        }
+
+        return response(['error' => 'Could not find any messages!'], 404);
     }
 
     /**
@@ -42,16 +47,12 @@ class MessageController extends Controller
             return response(['errors' => $validator->errors()->all()], 401);
         }
     
-        //$created_by = $request->user()->name;
         $created_by = Auth::guard('api')->user()->name;
-        //$user_id = $request->user()->id;
         $user_id = Auth::guard('api')->user()->id;
         $subject = $request->input('subject');
         $content = $request->input('content');
         $start_date = $request->input('start_date');
         $expiration_date = $request->input('expiration_date');
-        $viewed_by = "";
-        $read_by_all = false;
         
         $newMessage = Message::create([
             'created_by' => $created_by,
@@ -59,11 +60,10 @@ class MessageController extends Controller
             'content' => $content,
             'start_date' => $start_date,
             'expiration_date' => $expiration_date,
-            'viewed_by' => $viewed_by,
-            'read_by_all' => $read_by_all,
             'user_id' => $user_id
         ]);
 
+        
         return response(['message' => new MessageResource($newMessage), 'status' => 'Created'], 200);
     }
 
@@ -129,7 +129,7 @@ class MessageController extends Controller
     public function getMessageById($id) {
         $message = DB::table('messages')->where('id', '=', $id)->get();
         
-        return response(['message' => $message]);    
+        return response(['message' => $message, 'status' => 'Retrieved successfully!'], 200);    
     }
     
     public function userRead(Request $request) {

@@ -2,8 +2,8 @@
     <div class="user-page-container">
         <AdminNavBar />
         <h3>User Registration</h3>
-        <div v-if="loading" class="mx-auto">
-            Loading...
+        <div v-if="loading" class="text-center">
+            <b-spinner label="Loading..."></b-spinner>
         </div>
         <div v-else>
             <div class="user-list">

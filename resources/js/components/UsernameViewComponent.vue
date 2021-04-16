@@ -1,18 +1,14 @@
 <template>
     <div class="component-homepage">
         <div class="main-content">
-            <h1>Welcome {{ getUsername() }}</h1>
+            <h1>Welcome</h1>
         </div>
     </div>
 </template>
 
 <script>
 export default {
-    methods: {
-        getUsername () {
-            return localStorage.getItem('name');
-        }
-    },
+
 }
 </script>
 

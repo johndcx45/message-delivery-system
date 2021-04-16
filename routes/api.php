@@ -13,7 +13,6 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout.api');
 // Authenticaded routes
 Route::group(['middleware' => ['authenticate']], function() {
 
-
     #region Messages
         Route::get('/message', [MessageController::class, 'index'])->middleware(['authorize:admin,backoffice,regular']);
         Route::post('/message', [MessageController::class, 'store'])->middleware(['authorize:backoffice,admin']);
