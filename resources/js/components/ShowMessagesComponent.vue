@@ -26,7 +26,7 @@
                         <td>{{ message.start_date }}</td>
                         <td>{{ message.expiration_date }}</td>
                         <td>{{ message.subject }}</td>                        
-                        <td><b-button variant="primary" v-on:click="viewMessage(message.id)"><router-link to="/fullview" style="text-decoration: none; color: white;">View</router-link></b-button></td>
+                        <td><b-button variant="primary" v-on:click="viewMessage(message.id)">View</b-button></td>
                         <td><b-button variant="danger" v-on:click="deleteMessage(message.id, message.user_id)">Delete</b-button></td>
                         <td><b-button variant="success" v-b-modal="edit-announcement" @click="showMessage(message)">Edit</b-button></td> 
                     </tr>
@@ -149,7 +149,7 @@ export default {
             required
         },
     },
-    created () {
+    mounted () {
         this.loading = true;
         this.getMessages();
     },
@@ -168,9 +168,7 @@ export default {
                 user_id = response.data.user_id;
                 localStorage.setItem('user_id', user_id);
                 localStorage.setItem('message_id', message_id);
-                console.log(localStorage.getItem('message_id'));
-            }).catch(err => {
-                this.$alert('An unexpected error ocurred!');
+                this.$router.push({ name: 'FullView'});
             });
         },
         deleteMessage(message_id, user_id) {
@@ -225,8 +223,14 @@ export default {
                 "Authorization": `Bearer ${access_token}`
                 }
             }).then(response => {
-                this.messages = response.data.messages;
-                this.loading = false;
+                if(response.status == 200) {
+                    this.messages = response.data.messages;
+                    this.loading = false;
+                } else {
+                    this.messages = [];
+                    this.loading = false;
+                }
+                
             });
         },
         validateState(name) {

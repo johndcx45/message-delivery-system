@@ -20,11 +20,7 @@ class MessageController extends Controller
     {
         $messages = Message::all();
 
-        if(!$messages->isEmpty()) {
-            return response(['messages' => MessageResource::collection($messages), 'status' => 'Retrieved Successfully'], 200);
-        }
-
-        return response(['error' => 'Could not find any messages!'], 404);
+        return response(['messages' => MessageResource::collection($messages), 'status' => 'Retrieved Successfully'], 200);
     }
 
     /**
@@ -140,6 +136,8 @@ class MessageController extends Controller
             'user_id' => $user_id,
             'message_id' => $message_id
         ]);
+
+        return response(['user_id' => $user_id, 'message_id' => $message_id], 200);
 
         return response(['message' => 'Updated viewed_by table successfully'], 200);
     }

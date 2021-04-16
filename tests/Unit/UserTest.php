@@ -11,7 +11,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class UserTest extends TestCase
 {
-   /*  use WithoutMiddleware;
+     use WithoutMiddleware;
 
     public function testUserCreatedSuccessfully()
     {
@@ -214,4 +214,4 @@ class UserTest extends TestCase
                 'users'
             ]);
     }
- */}
+}

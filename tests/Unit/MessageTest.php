@@ -13,7 +13,7 @@ class MessageTest extends TestCase
 {
     use WithoutMiddleware;
 
-   /*  public function testIfCanShowMessages()
+   public function testIfCanShowMessages()
     {
         $this->call('GET', 'api/message')
             ->assertStatus(200)
@@ -21,15 +21,6 @@ class MessageTest extends TestCase
                 'messages',
                 'status'
             ]);
-    }
-
-    public function testIfMessagesAreEmpty()
-    {
-        $this->call('GET', 'api/message')
-        ->assertStatus(404)
-        ->assertJsonStructure([
-            'error'
-        ]); 
     }
 
     public function testSuccessfullStoredMessage()
@@ -82,9 +73,8 @@ class MessageTest extends TestCase
                 'errors'
             ]);
     }
-     */
 
-    /* public function testMessageDoesExists()
+    public function testMessageDoesExists()
     {
         $faker = \Faker\Factory::create();
         $loggedUser = User::factory()->create();
@@ -157,7 +147,7 @@ class MessageTest extends TestCase
                 'status'
             ]); 
     }
-*/
+
 
     public function testUpdateMessage()
     {

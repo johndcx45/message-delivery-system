@@ -1,7 +1,14 @@
 <template>
     <div class="full-view-component">
-        <RegularNavBar />
-        <div class="message-fullview">
+        <regular-nav-bar></regular-nav-bar>
+        <h3>Announcement Details</h3>
+        <div v-if="loading">
+            <div class="text-center mt-5">
+                <b-spinner label="Loading..."></b-spinner>
+            </div>
+            
+        </div>
+        <div v-else>
             <table>
                 <thead>
                     <tr>
@@ -12,7 +19,6 @@
                         <th>Start Date</th>
                         <th>Expiration Date</th>
                         <th>Viewed By</th>
-                        <th>Read By All</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -32,22 +38,27 @@
 </template>
 
 <script>
-import RegularNavBar from './RegularNavBar';
+import RegularNavBar from './RegularNavBar.vue';
 
 export default {
-    components: { 
-        'RegularNavBar': RegularNavBar
+    components: {
+        RegularNavBar
+        
     },
     data () {
         return {
-            message: []
+            message: [],
+            viewed_by: null,
+            viewedByLoading: false,
+            loading: false
         }
     },
     created () {
+        this.loading = true;
         this.markAsRead();
-        let message_view_id = localStorage.getItem('message_view_id');
+        let message_id = localStorage.getItem('message_id');
 
-        let url = `http://localhost:8000/api/message/${message_view_id}`;
+        let url = `http://localhost:8000/api/message/${message_id}`;
 
         let access_token = localStorage.getItem('access_token');
 
@@ -58,8 +69,8 @@ export default {
             }
         }).then(response => {
             this.message = response.data.message
+            this.loading = false;
         });
-        
     },
     methods:{
          markAsRead() {
@@ -82,23 +93,8 @@ export default {
                 this.fetchViewedBy();
             })
         },
-        getMessage() {
-            let message_view_id = localStorage.getItem('message_view_id');
-
-            let url = `http://localhost:8000/api/message/${message_view_id}`;
-
-            let access_token = localStorage.getItem('access_token');
-
-            const fetchedData = this.axios.get( url, { headers: {
-                    "Access-Control-Allow-Origin" : "*",
-                    "Content-type": "Application/json",
-                    "Authorization": `Bearer ${access_token}`
-                }
-            }).then(response => { 
-                //console.log(response.data.message);
-            });
-        },
         fetchViewedBy() {
+            this.viewedByLoading = true;
             let viewedByUrl = `http://localhost:8000/api/viewedby`;
             let access_token = localStorage.getItem('access_token');
                         
@@ -108,8 +104,22 @@ export default {
                 "Authorization": `Bearer ${access_token}`
                 }
             }).then(res => {
-                console.log(res);
+               let viewedByString = this.convertViewedByToString(res.data.viewed_by);
+               this.viewed_by = viewedByString;
+               this.viewedByLoading = false;
             });
+        },
+        convertViewedByToString(viewed_by) {
+            let string = viewed_by[0].name;
+            
+            for(let i in viewed_by) {
+                if(i != 0) {
+                    string = string + ', ' + viewed_by[i].name;
+                }
+            }
+
+            console.log(string);
+            return string;
         }
     }
 }

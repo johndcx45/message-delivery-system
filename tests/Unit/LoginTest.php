@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 class LoginTest extends TestCase
 {
    
-   /*  public function testSuccessfulLoginAttempt()
+   public function testSuccessfulLoginAttempt()
     {
         $faker = \Faker\Factory::create();
 
@@ -21,7 +21,7 @@ class LoginTest extends TestCase
             'username' => $username,
             'password' => Hash::make($password)
         ];
-
+        
         $user = User::factory()->create($credentials);
 
         $response = $this->call('POST', 'api/login', [
@@ -86,4 +86,4 @@ class LoginTest extends TestCase
                 'errors'
             ]);
     }
- */}
+}

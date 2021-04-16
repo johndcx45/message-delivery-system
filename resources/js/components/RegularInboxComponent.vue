@@ -2,7 +2,10 @@
     <div class="component-view">
         <RegularNavBar />
         <h3>Announcements</h3>
-        <div class="content-view">
+        <div v-if="loading" class="text-center">
+            <b-spinner label="Loading..."></b-spinner>
+        </div>
+        <div class="content-view" v-else>
             <table>
                 <thead>
                     <tr>
@@ -21,7 +24,7 @@
                         <td>{{ message.start_date }}</td>
                         <td>{{ message.expiration_date }}</td>
                         <td>{{ message.subject }}</td>                        
-                        <td><b-button variant="primary" v-on:click="viewMessage(message.id)"><router-link to="/fullview" style="text-decoration: none; color: white;">View</router-link></b-button></td> 
+                        <td><b-button variant="primary" v-on:click="viewMessage(message.id)">View</b-button></td> 
                     </tr>
                 </tbody>
             </table>
@@ -41,7 +44,8 @@ export default {
         return {
             messages: [],
             message: null,
-            role: localStorage.getItem('role')
+            role: localStorage.getItem('role'),
+            loading: false
         }        
     },
     computed: {
@@ -52,12 +56,26 @@ export default {
         }
     },
     created () {
+        this.loading = true;
         this.getMessages();
     },
     methods: {
-        viewMessage (id) {
-            localStorage.setItem('message_view_id', id);
-            let name = localStorage.getItem('name');
+        viewMessage (message_id) {
+            let user_id = null;
+            let userIdUrl = 'http://localhost:8000/api/userid';
+            let access_token = localStorage.getItem('access_token');
+
+            const resUserId = this.axios.get( userIdUrl, { headers: {
+                "Access-Control-Allow-Origin" : "*",
+                "Content-type": "Application/json",
+                "Authorization": `Bearer ${access_token}`
+            }
+            }).then(response => {
+                user_id = response.data.user_id;
+                localStorage.setItem('user_id', user_id);
+                localStorage.setItem('message_id', message_id);
+                this.$router.push({ name: 'FullView'});
+            });
         },
         getMessages(){ 
             let url = 'http://localhost:8000/api/message';
@@ -70,6 +88,7 @@ export default {
                 }
             }).then(response => {
                 this.messages = response.data.messages;
+                this.loading = false;
             });
         }
     }

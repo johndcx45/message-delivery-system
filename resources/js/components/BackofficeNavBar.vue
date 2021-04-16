@@ -17,7 +17,6 @@
                 </nav>
             </div>
         </div>
-        <b-button variant="danger" @click="logout"><router-link to="/login">Logout</router-link></b-button>
     </div>
 </template>
 

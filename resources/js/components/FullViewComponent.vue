@@ -2,6 +2,7 @@
     <div class="full-view-component">
         <AdminNavBar v-if="this.role == 'admin'"/>
         <BackofficeNavBar v-else-if="this.role == 'backoffice'"/>
+        <RegularNavBar v-else />
         <h3>Announcement Details</h3>
         <div v-if="loading">
             <div class="text-center mt-5">
@@ -10,7 +11,7 @@
             
         </div>
         <div v-else>
-            <div class="mx-auto" style="width: 600px;">
+            <div class="mx-auto" style="width: 1100px;">
                 <table>
                     <thead>
                         <tr>
@@ -44,11 +45,14 @@
 <script>
 import AdminNavBar from './AdminNavBar.vue'
 import BackofficeNavBar from './BackofficeNavBar';
+import RegularNavBar from './RegularNavBar';
 
 export default {
+    props: ['selectedMessage'],
     components: { 
         'AdminNavBar': AdminNavBar,
-        'BackofficeNavBar' : BackofficeNavBar
+        'BackofficeNavBar' : BackofficeNavBar,
+        'RegularNavBar': RegularNavBar
     },
     data () {
         return {
@@ -56,30 +60,32 @@ export default {
             viewed_by: null,
             viewedByLoading: false,
             role: localStorage.getItem('role'),
-            loading: false
+            loading: false,
+            message_id: localStorage.getItem('message_id')
         }
     },
-    created () {
+    created() {
         this.loading = true;
         this.markAsRead();
-        let message_id = localStorage.getItem('message_id');
-
-        let url = `http://localhost:8000/api/message/${message_id}`;
-
-        let access_token = localStorage.getItem('access_token');
-
-        const fetchedData = this.axios.get( url, { headers: {
-            "Access-Control-Allow-Origin" : "*",
-            "Content-type": "Application/json",
-            "Authorization": `Bearer ${access_token}`
-            }
-        }).then(response => {
-            this.message = response.data.message
-            this.loading = false;
-        });
+        this.getMessage();
     },
     methods:{
-         markAsRead() {
+        getMessage() {
+            let url = `http://localhost:8000/api/message/${this.message_id}`;
+
+            let access_token = localStorage.getItem('access_token');
+
+            const fetchedData = this.axios.get( url, { headers: {
+                "Access-Control-Allow-Origin" : "*",
+                "Content-type": "Application/json",
+                "Authorization": `Bearer ${access_token}`
+                }
+            }).then(response => {
+                this.message = response.data.message
+                this.loading = false;
+            });
+        },
+        markAsRead() {
             let message_id = localStorage.getItem('message_id');
             let user_id = localStorage.getItem('user_id');
 
@@ -111,7 +117,6 @@ export default {
                 }
             }).then(res => {
                let viewedByString = this.convertViewedByToString(res.data.viewed_by);
-               console.log(viewedByString);
                this.viewed_by = viewedByString;
                this.viewedByLoading = false;
             });
@@ -124,8 +129,6 @@ export default {
                     string = string + ', ' + viewed_by[i].name;
                 }
             }
-
-            console.log(string);
             return string;
         }
     }

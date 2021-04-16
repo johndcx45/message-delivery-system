@@ -18,8 +18,8 @@ export default {
                 this.$alert(error);
             }).finally(() => {
                 localStorage.removeItem('access_token');
-                console.log(localStorage.getItem('access_token'));
                 localStorage.removeItem('role');
+                localStorage.removeItem('message_id');
                 this.$router.push({ name: 'login', query: { redirect: 'login' }});
             });
         }
